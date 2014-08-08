@@ -18,7 +18,7 @@ void setup()
 
 void draw() 
 {
-  if(!drawn)
+  if(true)
   {
     viewController.draw();
     drawn = true;

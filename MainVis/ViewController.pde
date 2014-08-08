@@ -50,6 +50,8 @@ public class ViewController
         posY += maxRadius;
       }
       // TODO: draw Circle(Point centre,float maxRadius,int level,bool grid)
+      fill(200);
+      stroke(200);
       ellipse(posX,posY,maxRadius-20,maxRadius-20);
       posX += maxRadius;
       circlesDrawn++;
