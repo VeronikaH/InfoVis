@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-void setup() 
-{
-  size(500, 500);
-  background(200, 100, 0);
-} 
-=======
 String[] lines;
 ArrayList<DataRecord> dataRecords = new ArrayList<DataRecord>();
 
@@ -14,7 +7,6 @@ void setup()
   readDataFile();
 }
 
->>>>>>> feb1abcbb98cb7934e179d3d3edfa7d80d03109b
 void draw() 
 {
   
