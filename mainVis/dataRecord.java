@@ -10,7 +10,7 @@ public class DataRecord
      age = 0; 
   }
   
-  public void set(int list, int place, int value)
+  public void set(int list, int place, float value)
   {
     if (list == 1) 
       all[place] = value; 
