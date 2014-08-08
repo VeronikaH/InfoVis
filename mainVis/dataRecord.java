@@ -33,7 +33,7 @@ public class dataRecord
     else if (list == 3)
       return female[place];
     else
-      return -1.0;
+      return -1.0f;
   }
   
   public float[] getList(int list)
@@ -45,6 +45,11 @@ public class dataRecord
     else if (list == 3)
       return female;
     else
-      return -1.0;
+      return null;
+  }
+  
+  public int getAge() 
+  {
+    return this.age;
   }
 }
