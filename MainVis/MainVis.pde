@@ -1,15 +1,22 @@
+// Fullscreen: Sketch -> Present oder STRG + UMSCHALT + R
+
+
 String[] lines;
 ArrayList<DataRecord> dataRecords = new ArrayList<DataRecord>();
+ViewController viewController;
 
 void setup() 
 {
+  size(displayWidth,displayHeight);
+  background(60);
   lines = loadStrings("data.txt");
   readDataFile();
+  viewController = new ViewController(dataRecords);
 }
 
 void draw() 
 {
-  
+  viewController.draw();
 }
 
 void readDataFile()
