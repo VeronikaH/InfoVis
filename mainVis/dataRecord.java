@@ -20,6 +20,10 @@ public class dataRecord
       female[place] = value;
   }
   
+  public void setAge(int age) {
+    this.age = age;
+  }
+  
   public float get(int list, int place)
   {
     if (list == 1) 
@@ -29,7 +33,7 @@ public class dataRecord
     else if (list == 3)
       return female[place];
     else
-      return null;
+      return -1.0;
   }
   
   public float[] getList(int list)
@@ -41,6 +45,6 @@ public class dataRecord
     else if (list == 3)
       return female;
     else
-      return null;
+      return -1.0;
   }
 }

@@ -1,2 +1,5 @@
 void setup() {} 
-void draw() {}
+void draw() 
+{
+  dataRecord r = new dataRecord();
+}
