@@ -8,7 +8,9 @@ public class ViewController
   int viewModus = 1; // 1 -> Übersicht ist groß, Auswahl einzelner Kreise möglich; 2 -> Overviewfenster, Legende, Dropdownmenu
   //Legend legend;
   //DropDownMenu menu;
-  //Button button;
+  Button button = new Button("Fertig",width-100,height-80,80,50);
+  int buttonX;
+  int buttonY;
   
   
   ViewController(ArrayList<DataRecord> dataRecords) 
@@ -20,20 +22,15 @@ public class ViewController
   
   void draw()
   {
-    JFrame frame = new JFrame("Test");
-    JPanel panel = new JPanel();
-    JButton button = new JButton("Fertig");
-    panel.add(button);
-    frame.add(panel);
-    frame.setSize(width,height);
-    frame.setVisible(true);
     
     if (viewModus == 1)
-      drawOverview();
-
+    {
+      drawLittleCircles();
+      button.drawButton();
+    }
   }
 
-  void drawOverview()
+  void drawLittleCircles()
   {
     int startX = 200; // falls Seitenleiste hinzukommt, hier Breite abziehen
     int startY = 50;

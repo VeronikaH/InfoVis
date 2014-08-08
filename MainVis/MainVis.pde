@@ -5,6 +5,8 @@ String[] lines;
 ArrayList<DataRecord> dataRecords = new ArrayList<DataRecord>();
 ViewController viewController;
 
+boolean drawn = false;
+
 void setup() 
 {
   size(displayWidth,displayHeight);
@@ -16,7 +18,11 @@ void setup()
 
 void draw() 
 {
-  viewController.draw();
+  if(!drawn)
+  {
+    viewController.draw();
+    drawn = true;
+  }
 }
 
 void readDataFile()
