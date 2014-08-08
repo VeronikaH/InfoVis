@@ -1,11 +1,11 @@
-public class dataRecord 
+public class DataRecord 
 {
   int age; 
   float[] all    = new float[16]; 
   float[] male   = new float[16]; 
   float[] female = new float[16]; 
   
-  public dataRecord() 
+  public DataRecord() 
   {
      age = 0; 
   }
