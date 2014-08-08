@@ -1,6 +1,6 @@
 void setup() {} 
 void draw() 
 {
-  dataRecord r = new dataRecord();
+  DataRecord r = new DataRecord();
   r.setAge(5);
 }
