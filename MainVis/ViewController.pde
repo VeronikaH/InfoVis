@@ -37,6 +37,10 @@ public class ViewController
         firstRun = false;
       }
       buttonF.update();
+    }
+    
+    else if (viewModus == 2)
+    {
       buttonG.update();
       buttonGg.update();
     }
