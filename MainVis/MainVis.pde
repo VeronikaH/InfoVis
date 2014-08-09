@@ -1,5 +1,5 @@
 // Fullscreen: Sketch -> Present oder STRG + UMSCHALT + R
-
+import java.awt.*;
 
 String[] lines;
 ArrayList<DataRecord> dataRecords = new ArrayList<DataRecord>();

@@ -1,10 +1,10 @@
 
 
-public class Diagram() 
+public class Diagram
 {
-  List<DiagramPart> diagram; 
+  ArrayList<DiagramPart> diagram; 
   
-  public Diagram(List<DataRecord> dataSet) 
+  public Diagram(ArrayList<DataRecord> dataSet) 
   {
   }
   

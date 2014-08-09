@@ -1,16 +1,17 @@
 import java.lang.*;
 import javax.swing.*;
 
-public class ViewController 
+public class ViewController
 {
   ArrayList<DataRecord> dataRecords;
   ArrayList<DataRecord> selectedDataRecords;
   int viewModus = 1; // 1 -> Übersicht ist groß, Auswahl einzelner Kreise möglich; 2 -> Overviewfenster, Legende, Dropdownmenu
   //Legend legend;
   //DropDownMenu menu;
-  Button button = new Button("Fertig",width-100,height-80,80,50);
-  int buttonX;
-  int buttonY;
+  Button buttonF = new Button("Fertig",width-100,height-80,80,50,null);
+  Button buttonG = new Button("Gesamt",width-100,10,80,50,"gesamt.png");
+  Button buttonGg = new Button("Geschlechtergetrennt",width-100,62,80,50,"getrennt.png");
+  boolean firstRun = true;
   
   
   ViewController(ArrayList<DataRecord> dataRecords) 
@@ -19,14 +20,25 @@ public class ViewController
     this.selectedDataRecords = dataRecords; // zu Beginn soll alles angezeigt werden 
   }
   
+  void setup()
+  {
+    
+  }
+  
   
   void draw()
   {
     
     if (viewModus == 1)
     {
-      drawLittleCircles();
-      button.drawButton();
+      if (firstRun) 
+      {
+        drawLittleCircles();
+        firstRun = false;
+      }
+      buttonF.update();
+      buttonG.update();
+      buttonGg.update();
     }
   }
 

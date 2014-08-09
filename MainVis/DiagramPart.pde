@@ -1,4 +1,4 @@
-public class DiagramPart() 
+public class DiagramPart
 {
   float centerX, centerY, radius;
   float angle1, angle2;
@@ -40,7 +40,7 @@ public class DiagramPart()
     return this.angle2;
   }
   
-  boolean mouseInside(int x, int y) {
+  /*boolean mouseInside(int x, int y) {
     if (sqrt(pow(x-centerX,2) - pow(y-centerY,2)) <= d) 
     {
       float a = normalizeAngle(atan2(y-centerY, x-centerX));
@@ -52,7 +52,7 @@ public class DiagramPart()
     }
     else
       return false;
-  }
+  }*/
   
   float normalizeAngle(float angle) 
   {
