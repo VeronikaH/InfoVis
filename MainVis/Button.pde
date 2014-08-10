@@ -6,6 +6,7 @@ public class Button
   int bWidth;
   int bHeight;
   boolean mouseInside = true;
+  boolean activated = false;
   String image;
   PImage icon;
   
@@ -21,16 +22,6 @@ public class Button
   
   void drawButton()
   {
-    if (mouseInside)
-    {
-      stroke(255);
-      cursor(HAND);
-    }
-    else 
-    {
-      stroke(0);
-      cursor(ARROW);
-    }
     strokeWeight(2);
     fill(180);
     rect(x,y,bWidth,bHeight,7);
@@ -61,17 +52,37 @@ public class Button
   void update()
   {
     boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
-    if (mouseInside && !newMousePos)
-    {
-      mouseInside = false;
-      drawButton();
-    }
-    else if (!mouseInside && newMousePos)
+    if (!mouseInside && newMousePos)
     {
       mouseInside = true;
+      stroke(255);
+      cursor(HAND);
+      drawButton();
+    }
+    else if (mouseInside && !newMousePos && !activated)
+    {
+      mouseInside = false;
+      stroke(0);
+      cursor(ARROW);
       drawButton();
     }
     
+  }
+  
+  void activate()
+  {
+    activated = true;
+    stroke(255);
+    cursor(ARROW);
+    drawButton();
+  }
+  
+  void deactivate()
+  {
+    activated = false;
+    stroke(0);
+    cursor(ARROW);
+    drawButton();
   }
 
 }
