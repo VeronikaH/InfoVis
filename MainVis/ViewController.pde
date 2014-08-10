@@ -36,7 +36,7 @@ public class ViewController
       if (firstRun) 
       {
         drawLittleCircles();
-        drawHeadlines();
+        drawHeadlinesView1();
         firstRun = false;
       }
       buttonF.update();
@@ -74,17 +74,29 @@ public class ViewController
       if (firstRun)
       {
         background(60);
+        drawOverview();
+        drawHeadlinesView2();
         firstRun = false;
       }
       buttonG.update();
       buttonGg.update();
+      if (buttonG.mouseInside && mousePressed)
+      {
+        buttonGg.deactivate();
+        buttonG.activate();
+      }
+      else if (buttonGg.mouseInside && mousePressed)
+      {
+        buttonG.deactivate();
+        buttonGg.activate();
+      }
     }
   }
 
   void drawLittleCircles()
   {
     int startX = 200; // falls Seitenleiste hinzukommt, hier Breite abziehen
-    int startY = 50;
+    int startY = 100;
     int drawingWidth = width - startX; 
     int drawingHeight = height - startY;
     int circlesInRow = 7;
@@ -109,8 +121,18 @@ public class ViewController
     }
   }
   
-  void drawHeadlines()
+  void drawHeadline()
   {
+    fill(255);
+    textSize(32);
+    text("Schüler/-innen und Studierende nach Geschlecht,",320,50);
+    text("Alter und Bildungsbereichen 2010",450,85);
+  }
+  
+  void drawHeadlinesView1()
+  {
+    drawHeadline();
+    
     fill(200);
     stroke(200);
     rect(20,20,150,40);
@@ -121,6 +143,26 @@ public class ViewController
     fill(200);
     rect(20,250,150,40);
     fill(0);
+    text("Legende",25,280);
+  }
+  
+  void drawOverview()
+  {
+    fill(120);
+    stroke(120);
+    rect(20,20,280,220);
+    // TODO: Kreise zeichnen mit aktuell ausgewählten
+  }
+  
+  void drawHeadlinesView2()
+  {
+    drawHeadline();
+    
+    stroke(200);
+    fill(200);
+    rect(20,250,150,40);
+    fill(0);
+    textSize(24);
     text("Legende",25,280);
   }
   

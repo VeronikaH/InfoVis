@@ -23,7 +23,7 @@ public class Button
   void drawButton()
   {
     strokeWeight(2);
-    fill(180);
+    fill(200);
     rect(x,y,bWidth,bHeight,7);
     fill(0);
     if (image != null)
@@ -71,18 +71,24 @@ public class Button
   
   void activate()
   {
-    activated = true;
-    stroke(255);
-    cursor(ARROW);
-    drawButton();
+    if (!activated)
+    {
+      activated = true;
+      stroke(255);
+      cursor(ARROW);
+      drawButton();
+    }
   }
   
   void deactivate()
   {
-    activated = false;
-    stroke(0);
-    cursor(ARROW);
-    drawButton();
+    if (activated)
+    {
+      activated = false;
+      stroke(0);
+      cursor(ARROW);
+      drawButton();
+    }
   }
 
 }
