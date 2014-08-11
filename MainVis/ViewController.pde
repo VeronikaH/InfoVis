@@ -89,15 +89,17 @@ public class ViewController
         // TODO: draw Circle(Point centre,float maxRadius,int level,bool grid)
         fill(200);
         stroke(200);
-        ArrayList<DiagramPart> d = diagrams.getDiagram1();
-        for (DiagramPart dp: d)
+        int index = dataRecords.indexOf(dr);
+        Diagram d = diagrams.get(index);
+        
+        ArrayList<DiagramPart> dp = d.getDiagram1();
+        for (DiagramPart p: dp)
         {
-          arc(posX,posY, dp.getRadius(), d.getRadius(), dp.getAngle1(), dp.getAngle2());
+          arc(posX, posY, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
         }
         posX += maxRadius;
         circlesDrawn++;
       }
-      
     }
   }
   
@@ -106,8 +108,9 @@ public class ViewController
     for (DataRecord d: dataRecords)
     {
       Diagram newDiagram = new Diagram(d, maxRadius, choice, x,y);
-      diagrams.add(newDiargram);
+      diagrams.add(newDiagram);
     }
+    
   }
   
   void drawHeadline()

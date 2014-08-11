@@ -41,7 +41,7 @@ public class Diagram
     float radius2 = (2.0/3.0) * this.maximumRadius;
     float epsilon = 0.0000001;
     
-    if ((choice <= 1) && (choice >= 3))
+    if ((choice >= 1) && (choice <= 3))
     {
       float[] list = data.getList(choice); 
       
@@ -53,7 +53,7 @@ public class Diagram
       factor = list[1] / list[0]; 
       stop *= factor;
       diagram1.add(new DiagramPart(radius1,start, stop));
-      
+   
       // second level
       start = 0.0;
       float[] schoolTypes = new float [6];
