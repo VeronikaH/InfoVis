@@ -1,28 +1,15 @@
 public class DiagramPart
 {
-  float centerX, centerY, radius;
-  float angle1, angle2;
+  float radius, angle1, angle2;
   float nAngle1, nAngle2;
   
-  public DiagramPart(float x, float y, float radius, float angle1, float angle2)
+  public DiagramPart(float radius, float angle1, float angle2)
   {
-    this.centerX = x;
-    this.centerY = y;
     this.radius = radius;
     this.angle1 = angle1;
     this.angle2 = angle2;
     this.nAngle1 = normalizeAngle(angle1);
     this.nAngle2 = normalizeAngle(angle2);
-  }
-  
-  public float getCenterX() 
-  {
-    return this.centerX;
-  }
-  
-  public float getCenterY() 
-  {
-    return this.centerY;
   }
   
   public float getRadius() 
@@ -45,8 +32,8 @@ public class DiagramPart
     this.radius = r;
   }
   
-  boolean mouseInside(int x, int y) {
-    if (sqrt(pow(x-centerX,2) - pow(y-centerY,2)) <= this.radius) 
+  boolean mouseInside(int x, int y, int centerX, int centerY) {
+    if (sqrt(pow(x-centerX,2) - pow(y-centerY,2)) <= radius) 
     {
       float a = normalizeAngle(atan2(y-centerY, x-centerX));
       boolean b = (nAngle1<=a)&&(a<=nAngle2);
