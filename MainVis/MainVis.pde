@@ -4,6 +4,7 @@ import java.awt.*;
 String[] lines;
 ArrayList<DataRecord> dataRecords = new ArrayList<DataRecord>();
 ViewController viewController;
+String activeButton; // wichtig für Buttoninteraktion
 
 boolean drawn = false;
 

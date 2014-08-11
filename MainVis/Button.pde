@@ -10,6 +10,7 @@ public class Button
   String image;
   PImage icon;
   
+  
   Button(String text, int x, int y, int bWidth, int bHeight, String image)
   {
     this.text = text;
@@ -40,11 +41,8 @@ public class Button
   
   boolean mouseInside()
   {
-    if (mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight) {
-      mouseInside = true;
+    if (mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight)
       return true;
-    }
-    mouseInside = false;
     return false;
     
   }
@@ -52,43 +50,35 @@ public class Button
   void update()
   {
     boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
-    if (!mouseInside && newMousePos)
+    if (activeButton != null && !activeButton.equals(text)) // neuer Button wurde geklickt
+      activated = false;
+    if (!mouseInside && newMousePos && !activated) // Maus wird auf Button bewegt, Button noch nicht geklickt
     {
       mouseInside = true;
-      stroke(255);
       cursor(HAND);
+      stroke(255);
       drawButton();
     }
-    else if (mouseInside && !newMousePos && !activated)
+    else if (mouseInside && !newMousePos && !activated) // Maus verlässt Button, Button nicht geklickt
     {
       mouseInside = false;
-      stroke(0);
       cursor(ARROW);
+      stroke(0);
       drawButton();
     }
-    
-  }
-  
-  void activate()
-  {
-    if (!activated)
+    else if (mouseInside && mousePressed) // Maus auf Button, Button wird geklickt
     {
       activated = true;
+      activeButton = text;
+      cursor(ARROW);
       stroke(255);
-      cursor(ARROW);
       drawButton();
     }
-  }
-  
-  void deactivate()
-  {
-    if (activated)
+    else if (mouseInside && !newMousePos && activated) // Maus verlässt Button, Button geklickt
     {
-      activated = false;
-      stroke(0);
-      cursor(ARROW);
-      drawButton();
+      //do nothing
     }
+    
   }
 
 }

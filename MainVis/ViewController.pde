@@ -23,10 +23,6 @@ public class ViewController
     this.selectedDataRecords = dataRecords; // zu Beginn soll alles angezeigt werden 
   }
   
-  void setup()
-  {
-  }
-  
   
   void draw()
   {
@@ -45,27 +41,8 @@ public class ViewController
       buttonM3.update();
       if (buttonF.mouseInside && mousePressed) // Klick auf Fertig-Button
       {
-        buttonF.activated = true;
         viewModus = 2;
         firstRun = true;
-      }
-      else if (buttonM1.mouseInside && mousePressed) // Klick auf Button Zoomstufe 1
-      {
-        buttonM2.deactivate();
-        buttonM3.deactivate();
-        buttonM1.activate();
-      }
-      else if (buttonM2.mouseInside && mousePressed) // Klick auf Zoomstufe 2
-      {
-        buttonM3.deactivate();
-        buttonM1.deactivate();
-        buttonM2.activate();
-      }
-      else if (buttonM3.mouseInside && mousePressed) // Klick auf Zoomstufe 3
-      {
-        buttonM1.deactivate();
-        buttonM2.deactivate();
-        buttonM3.activate();
       }
     }
     
@@ -80,16 +57,6 @@ public class ViewController
       }
       buttonG.update();
       buttonGg.update();
-      if (buttonG.mouseInside && mousePressed)
-      {
-        buttonGg.deactivate();
-        buttonG.activate();
-      }
-      else if (buttonGg.mouseInside && mousePressed)
-      {
-        buttonG.deactivate();
-        buttonGg.activate();
-      }
     }
   }
 
