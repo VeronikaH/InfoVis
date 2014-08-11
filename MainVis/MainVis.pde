@@ -47,7 +47,7 @@ void readDataFile()
         if (dr != null)
           dataRecords.add(dr);
         dr = new DataRecord();
-        dr.setAge(age);
+        dr.addAge(age);
         counter = 0;
       }
       else if (stringParts[k].contains("insgesamt")) 

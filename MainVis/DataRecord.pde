@@ -1,13 +1,16 @@
 public class DataRecord 
 {
-  int age; 
-  float[] all    = new float[16]; 
-  float[] male   = new float[16]; 
-  float[] female = new float[16]; 
+  IntList age;
+  float[] all; 
+  float[] male; 
+  float[] female; 
   
   public DataRecord() 
   {
-     age = 0; 
+    age = new IntList();
+    all = new float[16];
+    male = new float[16];
+    female = new float[16];
   }
   
   public void set(int list, int place, float value)
@@ -20,8 +23,18 @@ public class DataRecord
       female[place] = value;
   }
   
-  public void setAge(int age) {
-    this.age = age;
+  public void addVal(int list, int place, float value)
+  {
+    if (list == 1) 
+      all[place] += value; 
+    if (list == 2)
+      male[place] += value;
+    if (list == 3)
+      female[place] += value;
+  }
+  
+  public void addAge(int age) {
+    this.age.append(age);
   }
   
   public float get(int list, int place)
@@ -48,7 +61,7 @@ public class DataRecord
       return null;
   }
   
-  public int getAge() 
+  public IntList getAge() 
   {
     return this.age;
   }
