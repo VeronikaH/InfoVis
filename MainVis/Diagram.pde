@@ -6,15 +6,29 @@ public class Diagram
   float centerX, centerY;
   float maximum_radius;
   
+  
   public Diagram(ArrayList<DataRecord> dataSet, float max_radius, int choice, float x, float y)
   // choice {1,2,3} -> general, male, female 
   {
+    this.centerX = x;
+    this.centerY = y;
+    this.maximum_radius = max_radius;
+    
     DataRecord combinedData;
     if (dataSet.size() > 1)
       combinedData = prepare(dataSet);
     else
       combinedData = dataSet.get(0);
       
+    Diagram d = new Diagram(combinedData, max_radius, choice, x, y);
+    this.diagram1 = d.getDiagram1();
+    this.diagram2 = d.getDiagram2();
+    this.diagram3 = d.getDiagram3();   
+  }
+  
+  public Diagram(DataRecord data, float max_radius, int choice, float x, float y)
+  // choice {1,2,3} -> general, male, female 
+  {
     diagram1 = new ArrayList<DiagramPart>(); 
     diagram2 = new ArrayList<DiagramPart>(); 
     diagram3 = new ArrayList<DiagramPart>(); 
@@ -29,7 +43,7 @@ public class Diagram
     
     if ((choice <= 1) && (choice >= 3))
     {
-      float[] list = combinedData.getList(choice); 
+      float[] list = data.getList(choice); 
       
       float start = 0.0;
       float stop = 2 * PI;
@@ -79,42 +93,6 @@ public class Diagram
     }
   }
   
-  public DataRecord prepare(ArrayList<DataRecord> dataRecords)
-  {
-    DataRecord combinedData = new DataRecord();
-    int all, male, female; 
-    int allSys, maleSys, femaleSys;
-    for (DataRecord d: dataRecords)
-    {
-      int age = d.getAge().get(0);
-      if (!(d.getAge().hasValue(age)))
-      {
-        combinedData.addAge(age);
-      
-        for (int i = 0; i < 2; i++)
-        {
-          combinedData.addVal(1,i, d.get(1,i));
-          combinedData.addVal(2,i, d.get(2,i));
-          combinedData.addVal(3,i, d.get(3,i));
-        }
-        
-        for (int i = 2; i < 16; i++)
-        {
-          combinedData.addVal(1,i, d.get(1,i) * d.get(1,1));
-          combinedData.addVal(2,i, d.get(2,i) * d.get(2,1));
-          combinedData.addVal(3,i, d.get(3,i) * d.get(3,1));
-        }
-      }
-      for (int i = 2; i < 16; i++)
-      {
-        combinedData.addVal(1,i, d.get(1,i) / d.get(1,0));
-        combinedData.addVal(2,i, d.get(2,i) / d.get(2,0));
-        combinedData.addVal(3,i, d.get(3,i) / d.get(3,0));
-      }
-    }
-    return combinedData;
-  }
-  
   public float getCenterX() 
   {
     return this.centerX;
@@ -123,6 +101,16 @@ public class Diagram
   public float getCenterY() 
   {
     return this.centerY;
+  }
+  
+  public void setCenterX(float x) 
+  {
+    this.centerX = x;
+  }
+  
+  public void setCenterY(float y) 
+  {
+    this.centerY = y;
   }
   
   public ArrayList<DiagramPart> getDiagram1() 
@@ -140,4 +128,40 @@ public class Diagram
     return this.diagram3;
   }
   
+}
+
+public DataRecord prepare(ArrayList<DataRecord> dataRecords)
+{
+  DataRecord combinedData = new DataRecord();
+  int all, male, female; 
+  int allSys, maleSys, femaleSys;
+  for (DataRecord d: dataRecords)
+  {
+    int age = d.getAge().get(0);
+    if (!(d.getAge().hasValue(age)))
+    {
+      combinedData.addAge(age);
+    
+      for (int i = 0; i < 2; i++)
+      {
+        combinedData.addVal(1,i, d.get(1,i));
+        combinedData.addVal(2,i, d.get(2,i));
+        combinedData.addVal(3,i, d.get(3,i));
+      }
+      
+      for (int i = 2; i < 16; i++)
+      {
+        combinedData.addVal(1,i, d.get(1,i) * d.get(1,1));
+        combinedData.addVal(2,i, d.get(2,i) * d.get(2,1));
+        combinedData.addVal(3,i, d.get(3,i) * d.get(3,1));
+      }
+    }
+    for (int i = 2; i < 16; i++)
+    {
+      combinedData.addVal(1,i, d.get(1,i) / d.get(1,0));
+      combinedData.addVal(2,i, d.get(2,i) / d.get(2,0));
+      combinedData.addVal(3,i, d.get(3,i) / d.get(3,0));
+    }
+  }
+  return combinedData;
 }

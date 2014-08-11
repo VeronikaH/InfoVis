@@ -15,6 +15,7 @@ public class ViewController
   Button buttonM2 = new Button("2",20,132,40,50,null);
   Button buttonM3 = new Button("3",20,184,40,50,null);
   boolean firstRun = true;
+  ArrayList<Diagram> diagrams;
   
   
   ViewController(ArrayList<DataRecord> dataRecords) 
@@ -23,6 +24,13 @@ public class ViewController
     this.selectedDataRecords = dataRecords; // zu Beginn soll alles angezeigt werden 
   }
   
+  void initDiagrams(ArrayList<DataRecord> dataRecords)
+  {
+    for (DataRecord d: dataRecords)
+    {
+      Diagram newDiagram = Diagram(
+    }
+  }
   
   void draw()
   {
