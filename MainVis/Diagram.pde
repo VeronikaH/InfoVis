@@ -4,15 +4,15 @@ public class Diagram
   ArrayList<DiagramPart> diagram2;
   ArrayList<DiagramPart> diagram3; 
   float centerX, centerY;
-  float maximum_radius;
+  float maximumRadius;
   
   
-  public Diagram(ArrayList<DataRecord> dataSet, float max_radius, int choice, float x, float y)
+  public Diagram(ArrayList<DataRecord> dataSet, float maxRadius, int choice, float x, float y)
   // choice {1,2,3} -> general, male, female 
   {
     this.centerX = x;
     this.centerY = y;
-    this.maximum_radius = max_radius;
+    this.maximumRadius = maxRadius;
     
     DataRecord combinedData;
     if (dataSet.size() > 1)
@@ -20,13 +20,13 @@ public class Diagram
     else
       combinedData = dataSet.get(0);
       
-    Diagram d = new Diagram(combinedData, max_radius, choice, x, y);
+    Diagram d = new Diagram(combinedData, maxRadius, choice, x, y);
     this.diagram1 = d.getDiagram1();
     this.diagram2 = d.getDiagram2();
     this.diagram3 = d.getDiagram3();   
   }
   
-  public Diagram(DataRecord data, float max_radius, int choice, float x, float y)
+  public Diagram(DataRecord data, float maxRadius, int choice, float x, float y)
   // choice {1,2,3} -> general, male, female 
   {
     diagram1 = new ArrayList<DiagramPart>(); 
@@ -35,10 +35,10 @@ public class Diagram
     
     this.centerX = x;
     this.centerY = y;
-    this.maximum_radius = max_radius;
+    this.maximumRadius = maxRadius;
     
-    float radius1 = (1.0/3.0) * this.maximum_radius;
-    float radius2 = (2.0/3.0) * this.maximum_radius;
+    float radius1 = (1.0/3.0) * this.maximumRadius;
+    float radius2 = (2.0/3.0) * this.maximumRadius;
     float epsilon = 0.0000001;
     
     if ((choice <= 1) && (choice >= 3))
@@ -84,7 +84,7 @@ public class Diagram
         {
           factor = f/list[0];
           stop = start + factor*2*PI;
-          diagram3.add(new DiagramPart(max_radius,start,stop)); 
+          diagram3.add(new DiagramPart(maxRadius,start,stop)); 
           start = stop;
         }
         else

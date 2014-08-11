@@ -22,14 +22,7 @@ public class ViewController
   {
     this.dataRecords = dataRecords;
     this.selectedDataRecords = dataRecords; // zu Beginn soll alles angezeigt werden 
-  }
-  
-  void initDiagrams(ArrayList<DataRecord> dataRecords)
-  {
-    for (DataRecord d: dataRecords)
-    {
-      Diagram newDiagram = Diagram(
-    }
+    this.diagrams = new ArrayList<Diagram>();
   }
   
   void draw()
@@ -80,19 +73,40 @@ public class ViewController
     float maxRadius = Math.min(drawingWidth/circlesInRow,drawingHeight/circlesInColumn);
     float posX = startX + maxRadius/2;
     float posY = startY + maxRadius/2;
-    for (DataRecord dr : selectedDataRecords)
+    for (DataRecord dr : dataRecords)
     {
       if (circlesDrawn != 0 && circlesDrawn%circlesInRow == 0)
       {
         posX = startX + maxRadius/2;
         posY += maxRadius;
       }
-      // TODO: draw Circle(Point centre,float maxRadius,int level,bool grid)
-      fill(200);
-      stroke(200);
-      ellipse(posX,posY,maxRadius-20,maxRadius-20);
-      posX += maxRadius;
-      circlesDrawn++;
+      if (diagrams.isEmpty())
+      {
+        initDiagrams(dataRecords, maxRadius, 1, posX, posY);
+      }
+      else
+      {
+        // TODO: draw Circle(Point centre,float maxRadius,int level,bool grid)
+        fill(200);
+        stroke(200);
+        ArrayList<DiagramPart> d = diagrams.getDiagram1();
+        for (DiagramPart dp: d)
+        {
+          arc(posX,posY, dp.getRadius(), d.getRadius(), dp.getAngle1(), dp.getAngle2());
+        }
+        posX += maxRadius;
+        circlesDrawn++;
+      }
+      
+    }
+  }
+  
+   void initDiagrams(ArrayList<DataRecord> dataRecords, float maxRadius, int choice, float x, float y)
+  {
+    for (DataRecord d: dataRecords)
+    {
+      Diagram newDiagram = new Diagram(d, maxRadius, choice, x,y);
+      diagrams.add(newDiargram);
     }
   }
   
