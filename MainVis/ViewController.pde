@@ -110,11 +110,12 @@ public class ViewController
         int index = dataRecords.indexOf(dr);
         Diagram d = diagrams.get(index);
         
-        ArrayList<DiagramPart> dp = d.getDiagram1();
-        for (DiagramPart p: dp)
-        {
-          arc(posX, posY, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
-        }
+        ArrayList<DiagramPart> dp1 = d.getDiagram1();
+        ArrayList<DiagramPart> dp2 = d.getDiagram2();
+        ArrayList<DiagramPart> dp3 = d.getDiagram3();
+        drawDiagram(3, posX, posY, dp3);
+        drawDiagram(2, posX, posY, dp2);
+        drawDiagram(1, posX, posY, dp1);
         posX += maxRadius;
         circlesDrawn++;
       }
@@ -127,8 +128,55 @@ public class ViewController
     {
       Diagram newDiagram = new Diagram(d, maxRadius, choice, x,y);
       diagrams.add(newDiagram);
+    } 
+  }
+  
+  void drawDiagram(int level, float x, float y, ArrayList<DiagramPart> dp)
+  {
+    int colorIndex1, colorIndex2;
+    noStroke();
+    if (level == 3)
+    {
+      for (DiagramPart p: dp)
+      {
+        if (p != null)
+        {
+          colorIndex1 = sc.getSectorIndex(dp.indexOf(p));
+          colorIndex2 = sc.getSectorIndex(colorIndex1, dp.indexOf(p));
+          if ((colorIndex1 >= 0) && colorIndex2 >= 0)
+            fill(sc.getSchoolColor(colorIndex1, colorIndex2));
+          else 
+            fill(50);
+          arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+        }
+      }
     }
     
+    if (level == 2) 
+    {
+      int c = 100;
+      for (DiagramPart p: dp)
+      {
+        if (p != null)
+        {
+          colorIndex1 = dp.indexOf(p);
+          
+          if (colorIndex1 >= 0)
+            fill(sc.getSchoolColor(colorIndex1));
+          else
+            fill(c);
+          arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+        }
+      }
+    }
+    if (level == 1)
+    {
+      for (DiagramPart p: dp)
+      {
+        fill(200);
+        arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+      }
+    }
   }
   
   void drawHeadline()

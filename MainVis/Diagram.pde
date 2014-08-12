@@ -57,23 +57,26 @@ public class Diagram
       // second level
       start = 0.0;
       float[] schoolTypes = new float [6];
-      schoolTypes[0] = list[2] * list[1]; 
-      schoolTypes[1] = list[3] * list[1]; 
-      schoolTypes[2] = (list[4] + list[5] + list[6] + list[7] + list[8]) * list[1]; 
-      schoolTypes[3] = (list[9] + list[10] + list[11] + list[12]) * list[1];
-      schoolTypes[4] = (list[13] + list[14]) * list[1]; 
-      schoolTypes[5] = list[15] * list[1]; 
+      schoolTypes[0] = list[2]; 
+      schoolTypes[1] = list[3]; 
+      schoolTypes[2] = list[4] + list[5] + list[6] + list[7] + list[8]; 
+      schoolTypes[3] = list[9] + list[10] + list[11] + list[12];
+      schoolTypes[4] = list[13] + list[14]; 
+      schoolTypes[5] = list[15]; 
       for (float s: schoolTypes)
       {
-        if (s > epsilon)
+        if ( s > epsilon)
         {
-          factor = s / list[0];
-          stop = start + factor*2*PI;
-          diagram2.add(new DiagramPart(radius2,start,stop)); 
+          if (s > 100 + epsilon)
+            factor = 100.0;
+          else 
+            factor = s;
+          stop = start + (factor/100.0)*2*PI;
+          diagram2.add(new DiagramPart(radius2,start,stop));
           start = stop;
         }
         else
-          diagram2.add(null);
+          diagram2.add(new DiagramPart(0,0,0));
       }
      
      // third level 
@@ -83,12 +86,16 @@ public class Diagram
         if (f > epsilon)
         {
           factor = f/list[0];
-          stop = start + factor*2*PI;
+          if (f > 100 + epsilon)
+            factor = 100.0;
+          else 
+            factor = f;
+            stop = start + (factor/100.0)*2*PI;
           diagram3.add(new DiagramPart(maxRadius,start,stop)); 
           start = stop;
         }
         else
-          diagram3.add(null);
+          diagram3.add(new DiagramPart(0,0,0));
       }
     }
   }
@@ -151,9 +158,9 @@ public DataRecord prepare(ArrayList<DataRecord> dataRecords)
       
       for (int i = 2; i < 16; i++)
       {
-        combinedData.addVal(1,i, d.get(1,i) * d.get(1,1));
-        combinedData.addVal(2,i, d.get(2,i) * d.get(2,1));
-        combinedData.addVal(3,i, d.get(3,i) * d.get(3,1));
+        combinedData.addVal(1,i, d.get(1,i) * d.get(1,0));
+        combinedData.addVal(2,i, d.get(2,i) * d.get(2,0));
+        combinedData.addVal(3,i, d.get(3,i) * d.get(3,0));
       }
     }
     for (int i = 2; i < 16; i++)
