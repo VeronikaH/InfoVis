@@ -124,7 +124,8 @@ public class Button
   
   void initiateLeft()
   {
-    if (activeButtonZoom != null && activeButtonZoom.equals(text))
+    boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
+    if (activeButtonZoom != null && activeButtonZoom.equals(text) && mouseInside || newMousePos)
       stroke(255);
     else {
       stroke(0);
@@ -132,9 +133,10 @@ public class Button
     drawButton();
   }
   
-    void initiateRight()
+  void initiateRight()
   {
-    if (activeButtonSex != null && activeButtonSex.equals(text))
+    boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
+    if (activeButtonSex != null && activeButtonSex.equals(text) && mouseInside || newMousePos)
       stroke(255);
     else {
       stroke(0);
