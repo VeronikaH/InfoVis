@@ -35,4 +35,9 @@ public class SchoolSector
   {
     return schoolColors[index];
   }
+  
+  int getLength()
+  {
+    return schoolNames.length;
+  }
 }

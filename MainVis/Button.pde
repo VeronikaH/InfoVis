@@ -47,11 +47,14 @@ public class Button
     
   }
   
-  void update()
+  void updateLeft()
   {
     boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
-    if (activeButton != null && !activeButton.equals(text)) // neuer Button wurde geklickt
+    if (activeButtonZoom != null && !activeButtonZoom.equals(text)) // neuer Button wurde geklickt
+    {
       activated = false;
+      activeButtonChanged = true;
+    }
     if (!mouseInside && newMousePos && !activated) // Maus wird auf Button bewegt, Button noch nicht geklickt
     {
       mouseInside = true;
@@ -69,7 +72,8 @@ public class Button
     else if (mouseInside && mousePressed) // Maus auf Button, Button wird geklickt
     {
       activated = true;
-      activeButton = text;
+      if (text.equals("1") || text.equals("2") || text.equals("3"))
+        activeButtonZoom = text;
       cursor(ARROW);
       stroke(255);
       drawButton();
@@ -79,6 +83,63 @@ public class Button
       //do nothing
     }
     
+  }
+  
+  void updateRight()
+  {
+    boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
+    if (activeButtonSex != null && !activeButtonSex.equals(text)) // neuer Button wurde geklickt
+    {
+      activated = false;
+      activeButtonChanged = true;
+    }
+    if (!mouseInside && newMousePos && !activated) // Maus wird auf Button bewegt, Button noch nicht geklickt
+    {
+      mouseInside = true;
+      cursor(HAND);
+      stroke(255);
+      drawButton();
+    }
+    else if (mouseInside && !newMousePos && !activated) // Maus verlässt Button, Button nicht geklickt
+    {
+      mouseInside = false;
+      cursor(ARROW);
+      stroke(0);
+      drawButton();
+    }
+    else if (mouseInside && mousePressed) // Maus auf Button, Button wird geklickt
+    {
+      activated = true;
+      activeButtonSex = text;
+      cursor(ARROW);
+      stroke(255);
+      drawButton();
+    }
+    else if (mouseInside && !newMousePos && activated) // Maus verlässt Button, Button geklickt
+    {
+      //do nothing
+    }
+    
+  }
+  
+  void initiateLeft()
+  {
+    if (activeButtonZoom != null && activeButtonZoom.equals(text))
+      stroke(255);
+    else {
+      stroke(0);
+    }
+    drawButton();
+  }
+  
+    void initiateRight()
+  {
+    if (activeButtonSex != null && activeButtonSex.equals(text))
+      stroke(255);
+    else {
+      stroke(0);
+    }
+    drawButton();
   }
 
 }

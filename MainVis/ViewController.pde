@@ -6,14 +6,14 @@ public class ViewController
   ArrayList<DataRecord> dataRecords;
   ArrayList<DataRecord> selectedDataRecords;
   int viewModus = 1; // 1 -> Übersicht ist groß, Auswahl einzelner Kreise möglich; 2 -> Overviewfenster, Legende, Dropdownmenu
-  //Legend legend;
-  //DropDownMenu menu;
+  Legend legend = new Legend();
   Button buttonF = new Button("Fertig",width-100,height-80,80,50,null);
   Button buttonG = new Button("Gesamt",width-100,10,80,50,"gesamt.png");
   Button buttonGg = new Button("Geschlechtergetrennt",width-100,62,80,50,"getrennt.png");
   Button buttonM1 = new Button("1",20,80,40,50,null);
-  Button buttonM2 = new Button("2",20,132,40,50,null);
-  Button buttonM3 = new Button("3",20,184,40,50,null);
+  Button buttonM2 = new Button("2",65,80,40,50,null);
+  Button buttonM3 = new Button("3",110,80,40,50,null);
+  Overview overview = new Overview(20,20,280,220);
   boolean firstRun = true;
   ArrayList<Diagram> diagrams;
   
@@ -32,14 +32,24 @@ public class ViewController
     {
       if (firstRun) 
       {
+        background(60);
         drawLittleCircles();
         drawHeadlinesView1();
+        legend.drawLegend(1);
+        buttonF.initiateLeft();
+        buttonM1.initiateLeft();
+        buttonM2.initiateLeft();
+        buttonM3.initiateLeft();
         firstRun = false;
       }
-      buttonF.update();
-      buttonM1.update();
-      buttonM2.update();
-      buttonM3.update();
+      buttonF.updateLeft();
+      buttonM1.updateLeft();
+      buttonM2.updateLeft();
+      buttonM3.updateLeft();
+      if (activeButtonChanged) {
+        firstRun = true;
+        activeButtonChanged = false;
+      }
       if (buttonF.mouseInside && mousePressed) // Klick auf Fertig-Button
       {
         viewModus = 2;
@@ -52,12 +62,20 @@ public class ViewController
       if (firstRun)
       {
         background(60);
-        drawOverview();
+        overview.drawOverview();
         drawHeadlinesView2();
+        legend.drawLegend(2);
+        buttonG.initiateRight();
+        buttonGg.initiateRight();
         firstRun = false;
       }
-      buttonG.update();
-      buttonGg.update();
+      buttonG.updateRight();
+      buttonGg.updateRight();
+      if (overview.mouseInside() && mousePressed) // Klick auf Overview-Fenster
+      {
+        viewModus = 1;
+        firstRun = true;
+      }
     }
   }
 
@@ -125,37 +143,19 @@ public class ViewController
   {
     drawHeadline();
     
-    fill(200);
-    stroke(200);
-    rect(20,20,150,40);
-    fill(0);
-    textSize(24);
-    text("Zoomlevel",25,50);
-    
-    fill(200);
-    rect(20,250,150,40);
-    fill(0);
-    text("Legende",25,280);
-  }
-  
-  void drawOverview()
-  {
-    fill(120);
-    stroke(120);
-    rect(20,20,280,220);
-    // TODO: Kreise zeichnen mit aktuell ausgewählten
+    fill(255);
+    textSize(28);
+    text("Zoomlevel",10,50);
+    text("Legende",10,180);
   }
   
   void drawHeadlinesView2()
   {
     drawHeadline();
-    
-    stroke(200);
-    fill(200);
-    rect(20,250,150,40);
-    fill(0);
-    textSize(24);
-    text("Legende",25,280);
+
+    fill(255);
+    textSize(28);
+    text("Legende",10,280);
   }
   
 }

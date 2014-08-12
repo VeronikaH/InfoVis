@@ -26,4 +26,14 @@ public class SchoolController
   {
     return sectors[index1].getSchoolColor(index2);
   }
+  
+  int getNumberOfSectors()
+  {
+    return sectors.length;
+  }
+  
+  int getNumberOfSchools(int index)
+  {
+    return sectors[index].getLength();
+  }
 }

@@ -5,7 +5,9 @@ import java.awt.*;
 String[] lines;
 ArrayList<DataRecord> dataRecords = new ArrayList<DataRecord>();
 ViewController viewController;
-String activeButton; // wichtig für Buttoninteraktion
+String activeButtonZoom = "1"; // wichtig für Zoombuttoninteraktion
+String activeButtonSex = "Gesamt";
+boolean activeButtonChanged = false;
 
 SchoolSector first = new SchoolSector(
   "Vorschulbereich", 
