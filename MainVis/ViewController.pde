@@ -7,12 +7,12 @@ public class ViewController
   ArrayList<DataRecord> selectedDataRecords;
   int viewModus = 1; // 1 -> Übersicht ist groß, Auswahl einzelner Kreise möglich; 2 -> Overviewfenster, Legende, Dropdownmenu
   Legend legend = new Legend();
-  Button buttonF = new Button("Fertig",width-100,height-80,80,50,null);
-  Button buttonG = new Button("Gesamt",width-100,10,80,50,"gesamt.png");
-  Button buttonGg = new Button("Geschlechtergetrennt",width-100,62,80,50,"getrennt.png");
-  Button buttonM1 = new Button("1",20,80,40,50,null);
-  Button buttonM2 = new Button("2",65,80,40,50,null);
-  Button buttonM3 = new Button("3",110,80,40,50,null);
+  Button buttonF = new Button("Fertig",width-100,height-80,80,50,null,false);
+  Button buttonG = new Button("Gesamt",width-100,10,80,50,"gesamt.png",true);
+  Button buttonGg = new Button("Geschlechtergetrennt",width-100,62,80,50,"getrennt.png",false);
+  Button buttonM1 = new Button("1",20,80,40,50,null,true);
+  Button buttonM2 = new Button("2",65,80,40,50,null,false);
+  Button buttonM3 = new Button("3",110,80,40,50,null,false);
   Overview overview = new Overview(20,20,280,220);
   boolean firstRun = true;
   ArrayList<Diagram> diagrams;
@@ -25,7 +25,7 @@ public class ViewController
     this.diagrams = new ArrayList<Diagram>();
   }
   
-  void draw()
+  void drawInterface()
   {
     
     if (viewModus == 1)

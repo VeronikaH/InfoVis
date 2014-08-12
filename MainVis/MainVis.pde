@@ -65,7 +65,7 @@ void setup()
 
 void draw() 
 {
-  viewController.draw();
+  viewController.drawInterface();
 }
 
 void readDataFile()

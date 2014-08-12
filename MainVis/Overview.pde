@@ -4,6 +4,7 @@ public class Overview
   int y;
   int oWidth;
   int oHeight;
+  boolean mouseInside = false;
   
   public Overview(int x, int y, int oWidth, int oHeight)
   {
@@ -23,10 +24,18 @@ public class Overview
   
   boolean mouseInside()
   {
-    if (mouseX > x && mouseX < x+oWidth && mouseY > y && mouseY < y+oHeight)
+    boolean newMouseInside = mouseX > x && mouseX < x+oWidth && mouseY > y && mouseY < y+oHeight;
+    if (newMouseInside && !mouseInside)
     {
-      return true;
+      cursor(HAND);
+      mouseInside = true;
     }
-    return false;
+    else if (!newMouseInside && mouseInside)
+    {
+      cursor(ARROW);
+      mouseInside = false;
+    }
+    
+    return mouseInside;
   }
 }

@@ -6,12 +6,12 @@ public class Button
   int bWidth;
   int bHeight;
   boolean mouseInside = true;
-  boolean activated = false;
+  boolean activated;
   String image;
   PImage icon;
   
   
-  Button(String text, int x, int y, int bWidth, int bHeight, String image)
+  Button(String text, int x, int y, int bWidth, int bHeight, String image, boolean activated)
   {
     this.text = text;
     this.x = x;
@@ -19,6 +19,7 @@ public class Button
     this.bWidth = bWidth;
     this.bHeight = bHeight;
     this.image = image;
+    this.activated = activated;
   }
   
   void drawButton()
@@ -49,7 +50,7 @@ public class Button
   
   void updateLeft()
   {
-    boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
+    boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;      
     if (activeButtonZoom != null && !activeButtonZoom.equals(text)) // neuer Button wurde geklickt
     {
       activated = false;
@@ -127,9 +128,8 @@ public class Button
     boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
     if (activeButtonZoom != null && activeButtonZoom.equals(text) && mouseInside || newMousePos)
       stroke(255);
-    else {
+    else
       stroke(0);
-    }
     drawButton();
   }
   
@@ -138,9 +138,8 @@ public class Button
     boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;
     if (activeButtonSex != null && activeButtonSex.equals(text) && mouseInside || newMousePos)
       stroke(255);
-    else {
+    else
       stroke(0);
-    }
     drawButton();
   }
 
