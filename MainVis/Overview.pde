@@ -2,11 +2,11 @@ public class Overview
 {
   int x;
   int y;
-  int oWidth;
-  int oHeight;
+  float oWidth;
+  float oHeight;
   boolean mouseInside = false;
   
-  public Overview(int x, int y, int oWidth, int oHeight)
+  public Overview(int x, int y, float oWidth, float oHeight)
   {
     this.x = x;
     this.y = y;

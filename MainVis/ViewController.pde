@@ -81,6 +81,7 @@ public class ViewController
 
   void drawLittleCircles()
   {
+    int age = 5;
     int startX = 200; // falls Seitenleiste hinzukommt, hier Breite abziehen
     int startY = 100;
     int drawingWidth = width - startX; 
@@ -88,7 +89,7 @@ public class ViewController
     int circlesInRow = 7;
     int circlesInColumn = 4;
     int circlesDrawn = 0;
-    float maxRadius = Math.min(drawingWidth/circlesInRow,drawingHeight/circlesInColumn);
+    float maxRadius = Math.min(drawingWidth/circlesInRow,drawingHeight/circlesInColumn) - 10;
     float posX = startX + maxRadius/2;
     float posY = startY + maxRadius/2;
     for (DataRecord dr : dataRecords)
@@ -96,7 +97,7 @@ public class ViewController
       if (circlesDrawn != 0 && circlesDrawn%circlesInRow == 0)
       {
         posX = startX + maxRadius/2;
-        posY += maxRadius;
+        posY += maxRadius + 10;
       }
       if (diagrams.isEmpty())
       {
@@ -116,8 +117,17 @@ public class ViewController
         drawDiagram(3, posX, posY, dp3);
         drawDiagram(2, posX, posY, dp2);
         drawDiagram(1, posX, posY, dp1);
-        posX += maxRadius;
+        
+        fill(255);
+        textSize(17);
+        text(String.valueOf(age),posX-8,posY);
+        textSize(15);
+        text("Jahre",posX-17,posY+10);
+        age++;
+        
+        posX += maxRadius + 10;
         circlesDrawn++;
+
       }
     }
   }
