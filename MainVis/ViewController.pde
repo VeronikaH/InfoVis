@@ -5,7 +5,7 @@ public class ViewController
 {
   ArrayList<DataRecord> dataRecords;
   ArrayList<DataRecord> selectedDataRecords;
-  int viewModus = 1; // 1 -> Übersicht ist groß, Auswahl einzelner Kreise möglich; 2 -> Overviewfenster, Legende, Dropdownmenu
+  int viewModus = 1; // 1 -> Übersicht ist groß, Auswahl einzelner Kreise möglich; 2 -> Overviewfenster, Legende, Dropdownmenu, Gesamt; 3 -> wie 2, aber geschlechtergetrennt
   Legend legend = new Legend();
   Button buttonF = new Button("Fertig",width-100,height-80,80,50,null,false);
   Button buttonG = new Button("Gesamt",width-100,10,80,50,"gesamt.png",true);
@@ -57,17 +57,35 @@ public class ViewController
       }
     }
     
-    else if (viewModus == 2)
+    else 
     {
       if (firstRun)
       {
         background(60);
-        overview.drawOverview();
+        overview.drawOverview(dataRecords,diagrams);
         drawHeadlinesView2();
         legend.drawLegend(2);
         buttonG.initiateRight();
         buttonGg.initiateRight();
         firstRun = false;
+        if (viewModus == 2)
+        {
+          // draw big circle (initializing)
+          fill(255);
+          textSize(22);
+          text("Gesamt",750,750);
+        }
+        else if (viewModus == 3)
+        {
+          // draw two big circles (initializing)
+          fill(255);
+          stroke(255);
+          strokeWeight(2);
+          line(800,150,800,600);
+          textSize(22);
+          text("Männer",500,750);
+          text("Frauen",1000,750);
+        }
       }
       buttonG.updateRight();
       buttonGg.updateRight();
@@ -75,6 +93,24 @@ public class ViewController
       {
         viewModus = 1;
         firstRun = true;
+      }
+      else if (buttonGg.mouseInside && mousePressed)
+      {
+        viewModus = 3;
+        firstRun = true;
+      }
+      else if (buttonG.mouseInside && mousePressed)
+      {
+        viewModus = 2;
+        firstRun = true;
+      }
+      if (viewModus == 2)
+      {
+        // update big circle when clicked
+      }
+      else if (viewModus == 3)
+      {
+        // update two big circles when clicked
       }
     }
   }
@@ -105,7 +141,6 @@ public class ViewController
       }
       else
       {
-        // TODO: draw Circle(Point centre,float maxRadius,int level,bool grid)
         fill(200);
         stroke(200);
         int index = dataRecords.indexOf(dr);
@@ -132,7 +167,7 @@ public class ViewController
     }
   }
   
-   void initDiagrams(ArrayList<DataRecord> dataRecords, float maxRadius, int choice, float x, float y)
+  void initDiagrams(ArrayList<DataRecord> dataRecords, float maxRadius, int choice, float x, float y)
   {
     for (DataRecord d: dataRecords)
     {
