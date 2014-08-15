@@ -71,7 +71,21 @@ public class ViewController
         if (viewModus == 2)
         {
           // draw big circle (initializing)
-          fill(255);
+          float maxRadius = 500;
+          float posX = width/2.0;
+          float posY = height/2.0;
+          
+          Diagram d = new Diagram(dataRecords, maxRadius,1, posX, posY);
+          ArrayList<DiagramPart> dp1 = d.getDiagram1();
+          ArrayList<DiagramPart> dp2 = d.getDiagram2();
+          ArrayList<DiagramPart> dp3 = d.getDiagram3();
+        
+          drawDiagram(3, posX, posY, dp3);
+          drawDiagram(2, posX, posY, dp2);
+          drawDiagram(1, posX, posY, dp1);
+  
+          
+          fill(255); 
           textSize(22);
           text("Gesamt",750,750);
         }
@@ -149,6 +163,7 @@ public class ViewController
         ArrayList<DiagramPart> dp1 = d.getDiagram1();
         ArrayList<DiagramPart> dp2 = d.getDiagram2();
         ArrayList<DiagramPart> dp3 = d.getDiagram3();
+        
         drawDiagram(3, posX, posY, dp3);
         drawDiagram(2, posX, posY, dp2);
         drawDiagram(1, posX, posY, dp1);

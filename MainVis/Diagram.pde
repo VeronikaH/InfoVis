@@ -140,35 +140,38 @@ public class Diagram
 public DataRecord prepare(ArrayList<DataRecord> dataRecords)
 {
   DataRecord combinedData = new DataRecord();
-  int all, male, female; 
-  int allSys, maleSys, femaleSys;
+  
   for (DataRecord d: dataRecords)
   {
-    int age = d.getAge().get(0);
-    if (!(d.getAge().hasValue(age)))
-    {
-      combinedData.addAge(age);
+    combinedData.addVal(1,0, d.get(1,0));
+    combinedData.addVal(2,0, d.get(2,0));
+    combinedData.addVal(3,0, d.get(3,0));
+    combinedData.addVal(1,1, d.get(1,1));
+    combinedData.addVal(2,1, d.get(2,1));
+    combinedData.addVal(3,1, d.get(3,1));
     
-      for (int i = 0; i < 2; i++)
-      {
-        combinedData.addVal(1,i, d.get(1,i));
-        combinedData.addVal(2,i, d.get(2,i));
-        combinedData.addVal(3,i, d.get(3,i));
-      }
-      
-      for (int i = 2; i < 16; i++)
-      {
-        combinedData.addVal(1,i, d.get(1,i) * d.get(1,0));
-        combinedData.addVal(2,i, d.get(2,i) * d.get(2,0));
-        combinedData.addVal(3,i, d.get(3,i) * d.get(3,0));
-      }
-    }
     for (int i = 2; i < 16; i++)
     {
-      combinedData.addVal(1,i, d.get(1,i) / d.get(1,0));
-      combinedData.addVal(2,i, d.get(2,i) / d.get(2,0));
-      combinedData.addVal(3,i, d.get(3,i) / d.get(3,0));
+      combinedData.addVal(1,i, (float) (d.get(1,0) * d.get(1,i)));
+      combinedData.addVal(2,i, (float) (d.get(2,0) * d.get(2,i)));
+      combinedData.addVal(3,i, (float) (d.get(3,0) * d.get(3,i)));
     }
   }
+  
+  float a1, a2, b1, b2, c1, c2;
+  a1 = combinedData.get(1,0);
+  b1 = combinedData.get(2,0);
+  c1 = combinedData.get(3,0);
+  for (int i = 2; i < 16; i++)
+  {
+    a2 = combinedData.get(1,i);
+    b2 = combinedData.get(2,i);
+    c2 = combinedData.get(3,i);
+    
+    combinedData.set(1,i, (float) (a2 / a1));
+    combinedData.set(2,i, (float) (b2 / b1));
+    combinedData.set(3,i, (float) (c2 / c1));
+  }
+  
   return combinedData;
 }

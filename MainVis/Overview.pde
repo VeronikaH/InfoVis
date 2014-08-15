@@ -47,10 +47,11 @@ public class Overview
         stroke(200);
         int index = dataRecords.indexOf(dr);
         Diagram d = diagrams.get(index);
-        
+
         ArrayList<DiagramPart> dp1 = d.getDiagram1();
         ArrayList<DiagramPart> dp2 = d.getDiagram2();
         ArrayList<DiagramPart> dp3 = d.getDiagram3();
+        
         drawDiagram(3, posX, posY, dp3);
         drawDiagram(2, posX, posY, dp2);
         drawDiagram(1, posX, posY, dp1);
