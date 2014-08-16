@@ -70,21 +70,7 @@ public class ViewController
         firstRun = false;
         if (viewModus == 2)
         {
-          // draw big circle (initializing)
-          float maxRadius = 500;
-          float posX = width/2.0;
-          float posY = height/2.0;
-          
-          Diagram d = new Diagram(dataRecords, maxRadius,1, posX, posY);
-          ArrayList<DiagramPart> dp1 = d.getDiagram1();
-          ArrayList<DiagramPart> dp2 = d.getDiagram2();
-          ArrayList<DiagramPart> dp3 = d.getDiagram3();
-        
-          drawDiagram(3, posX, posY, dp3);
-          drawDiagram(2, posX, posY, dp2);
-          drawDiagram(1, posX, posY, dp1);
-  
-          
+          drawBigCircle(500.0, 3);
           fill(255); 
           textSize(22);
           text("Gesamt",750,750);
@@ -95,10 +81,14 @@ public class ViewController
           fill(255);
           stroke(255);
           strokeWeight(2);
-          line(800,150,800,600);
+          line(800,250,800,700);
+          
+          drawGenderCircle(400.0,1,3);
+          drawGenderCircle(400.0,2,3);
+          
           textSize(22);
-          text("Männer",500,750);
-          text("Frauen",1000,750);
+          text("Männer",width/4 +100,750);
+          text("Frauen",3 * (width/4)-100,750);
         }
       }
       buttonG.updateRight();
@@ -128,7 +118,87 @@ public class ViewController
       }
     }
   }
-
+  
+  void drawGenderCircle(float maxRadius, int gender, int level)
+  {
+    float posX,posY;
+    Diagram d;
+    if (gender == 1)
+    {
+      posX = width/4 + 100;
+      posY = height/2;
+      d = new Diagram(dataRecords, maxRadius, 2, posX, posY);
+    }
+    else
+    {
+      posX = 3 * (width/4) - 100;
+      posY = height/2;
+      d = new Diagram(dataRecords, maxRadius, 3, posX, posY);
+    }
+    
+    ArrayList<DiagramPart> dp1 = d.getDiagram1();
+    ArrayList<DiagramPart> dp2 = d.getDiagram2();
+    ArrayList<DiagramPart> dp3 = d.getDiagram3();
+    
+    if (level == 3)
+    {
+      drawDiagram(3, posX, posY, dp3);
+      drawDiagram(2, posX, posY, dp2);
+      drawDiagram(1, posX, posY, dp1);
+    }
+    if (level == 2)
+    {
+      drawDiagram(2, posX, posY, dp2);
+      drawDiagram(1, posX, posY, dp1);
+    }
+    if (level == 1)
+    {
+      drawDiagram(1, posX, posY, dp1);
+    }     
+  
+  }
+  
+  // TODO selectedDataRecords
+  void drawBigCircle(float maxRadius, int level)
+  {
+    // draw big circle (initializing)
+    float posX = width/2.0;
+    float posY = height/2.0;
+       
+    Diagram d = new Diagram(dataRecords, maxRadius,1, posX, posY);
+    
+    ArrayList<DiagramPart> dp1 = d.getDiagram1();
+    ArrayList<DiagramPart> dp2 = d.getDiagram2();
+    ArrayList<DiagramPart> dp3 = d.getDiagram3();
+    
+    if (level == 3)
+    {
+      drawDiagram(3, posX, posY, dp3);
+      drawDiagram(2, posX, posY, dp2);
+      drawDiagram(1, posX, posY, dp1);
+    }
+    if (level == 2)
+    {
+      drawDiagram(2, posX, posY, dp2);
+      drawDiagram(1, posX, posY, dp1);
+    }
+    if (level == 1)
+    {
+      drawDiagram(1, posX, posY, dp1);
+    }     
+  }
+  
+  int getLevel() 
+  {
+    if (buttonM1.isActivated())
+      return 1;
+    if (buttonM2.isActivated())
+      return 2;
+    if (buttonM3.isActivated())
+      return 3;
+    return 0;
+  }
+  
   void drawLittleCircles()
   {
     int age = 5;
@@ -163,10 +233,23 @@ public class ViewController
         ArrayList<DiagramPart> dp1 = d.getDiagram1();
         ArrayList<DiagramPart> dp2 = d.getDiagram2();
         ArrayList<DiagramPart> dp3 = d.getDiagram3();
+        int level = getLevel();
         
-        drawDiagram(3, posX, posY, dp3);
-        drawDiagram(2, posX, posY, dp2);
-        drawDiagram(1, posX, posY, dp1);
+        if (level == 3)
+        {
+          drawDiagram(3, posX, posY, dp3);
+          drawDiagram(2, posX, posY, dp2);
+          drawDiagram(1, posX, posY, dp1);
+        }
+        if (level == 2)
+        {
+          drawDiagram(2, posX, posY, dp2);
+          drawDiagram(1, posX, posY, dp1);
+        }
+        if (level == 1)
+        {
+          drawDiagram(1, posX, posY, dp1);
+        }  
         
         fill(255);
         textSize(17);
@@ -204,10 +287,10 @@ public class ViewController
           colorIndex1 = sc.getSectorIndex(dp.indexOf(p));
           colorIndex2 = sc.getSectorIndex(colorIndex1, dp.indexOf(p));
           if ((colorIndex1 >= 0) && colorIndex2 >= 0)
+          {
             fill(sc.getSchoolColor(colorIndex1, colorIndex2));
-          else 
-            fill(50);
-          arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+            arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+          }
         }
       }
     }

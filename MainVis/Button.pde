@@ -48,6 +48,11 @@ public class Button
     
   }
   
+  boolean isActivated()
+  {
+    return this.activated;
+  }
+  
   void updateLeft()
   {
     boolean newMousePos = mouseX > x && mouseX < x+bWidth && mouseY > y && mouseY < y+bHeight;      

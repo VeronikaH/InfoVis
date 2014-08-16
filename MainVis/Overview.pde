@@ -92,10 +92,10 @@ public class Overview
           colorIndex1 = sc.getSectorIndex(dp.indexOf(p));
           colorIndex2 = sc.getSectorIndex(colorIndex1, dp.indexOf(p));
           if ((colorIndex1 >= 0) && colorIndex2 >= 0)
+          {
             fill(sc.getSchoolColor(colorIndex1, colorIndex2));
-          else 
-            fill(50);
-          arc(x, y, 35, 35, p.getAngle1(), p.getAngle2(), PIE);
+            arc(x, y, 35, 35, p.getAngle1(), p.getAngle2(), PIE);
+          }
         }
       }
     }
