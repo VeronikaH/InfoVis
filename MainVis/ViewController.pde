@@ -317,7 +317,23 @@ public class ViewController
       for (DiagramPart p: dp)
       {
         fill(200);
-        arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+        boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) <= p.radius;
+        if (p.mouseInside(x,y) && nearCenter){
+          arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+        print(p.getRadius());
+        print('\t');
+        print(sqrt(sq(mouseX-x) - sq(mouseY-y)));
+        print('\t');
+        print(x);
+        print('\t');
+        print(mouseX);
+        print('\t');
+        print(y);
+        print('\t');
+        println(mouseY);
+        }
+        else
+          arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
       }
     }
   }

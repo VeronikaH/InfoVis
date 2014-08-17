@@ -32,20 +32,21 @@ public class DiagramPart
     this.radius = r;
   }
   
-  boolean mouseInside(int x, int y, int centerX, int centerY) {
-    if (sqrt(pow(x-centerX,2) - pow(y-centerY,2)) <= radius) 
-    {
-      float a = normalizeAngle(atan2(y-centerY, x-centerX));
-      boolean b = (nAngle1<=a)&&(a<=nAngle2);
-      if (nAngle1 < nAngle2)
-        return b;
-      else
-        return !b;  
-    }
-    else
-      return false;
+  boolean mouseInside(float centerX, float centerY) 
+  {
+   boolean nearCenter = sqrt(sq(mouseX-centerX) - sq(mouseY-centerY)) < radius;
+   float a = normalizeAngle(atan2(mouseY-centerY, mouseX-centerX));
+   boolean between;
+   if (nAngle1 < nAngle2)
+     between = nAngle1 <= a && a <= nAngle2;
+   else
+     between = !(nAngle2 <= a && a <= nAngle1);
+
+   if (nearCenter && between)
+     return true;
+   else
+     return false;  
   }
-  
   float normalizeAngle(float angle) 
   {
     float result = angle % (2 * PI);
