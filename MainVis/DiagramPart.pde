@@ -34,7 +34,7 @@ public class DiagramPart
   
   boolean mouseInside(float centerX, float centerY) 
   {
-   boolean nearCenter = sqrt(sq(mouseX-centerX) - sq(mouseY-centerY)) < radius;
+   boolean nearCenter = sqrt(sq(mouseX-centerX) + sq(mouseY-centerY)) < radius;
    float a = normalizeAngle(atan2(mouseY-centerY, mouseX-centerX));
    boolean between;
    if (nAngle1 < nAngle2)

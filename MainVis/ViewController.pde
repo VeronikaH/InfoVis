@@ -70,21 +70,20 @@ public class ViewController
         firstRun = false;
         if (viewModus == 2)
         {
-          drawBigCircle(500.0, 3);
+          //drawBigCircle(500.0, 3);
           fill(255); 
           textSize(22);
           text("Gesamt",750,750);
         }
         else if (viewModus == 3)
         {
-          // draw two big circles (initializing)
           fill(255);
           stroke(255);
           strokeWeight(2);
           line(800,250,800,700);
           
-          drawGenderCircle(400.0,1,3);
-          drawGenderCircle(400.0,2,3);
+          //drawGenderCircle(400.0,1,3);
+          //drawGenderCircle(400.0,2,3);
           
           textSize(22);
           text("Männer",width/4 +100,750);
@@ -111,10 +110,13 @@ public class ViewController
       if (viewModus == 2)
       {
         // update big circle when clicked
+        drawBigCircle(500.0, 3);
       }
       else if (viewModus == 3)
       {
         // update two big circles when clicked
+        drawGenderCircle(400.0,1,3);
+        drawGenderCircle(400.0,2,3);
       }
     }
   }
@@ -125,13 +127,13 @@ public class ViewController
     Diagram d;
     if (gender == 1)
     {
-      posX = width/4 + 100;
+      posX = width/4 + 220;
       posY = height/2;
       d = new Diagram(dataRecords, maxRadius, 2, posX, posY);
     }
     else
     {
-      posX = 3 * (width/4) - 100;
+      posX = 3 * (width/4) + 20;
       posY = height/2;
       d = new Diagram(dataRecords, maxRadius, 3, posX, posY);
     }
@@ -162,7 +164,7 @@ public class ViewController
   void drawBigCircle(float maxRadius, int level)
   {
     // draw big circle (initializing)
-    float posX = width/2.0;
+    float posX = width/2.0 + 50;
     float posY = height/2.0;
        
     Diagram d = new Diagram(dataRecords, maxRadius,1, posX, posY);
