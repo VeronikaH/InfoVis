@@ -52,6 +52,8 @@ public class Diagram
       // first level
       factor = list[1] / list[0]; 
       stop *= factor;
+      if (stop > 2 * PI)
+        stop = 2 * PI;
       diagram1.add(new DiagramPart(radius1,start, stop));
    
       // second level
@@ -74,6 +76,8 @@ public class Diagram
           stop = start + (factor/100.0)*2*PI;
           diagram2.add(new DiagramPart(radius2,start,stop));
           start = stop;
+          if (stop > 2 * PI)
+            stop = 2 * PI;
         }
         else
           diagram2.add(new DiagramPart(0,0,0));
@@ -93,6 +97,8 @@ public class Diagram
             stop = start + (factor/100.0)*2*PI;
           diagram3.add(new DiagramPart(maxRadius,start,stop)); 
           start = stop;
+          if (stop > 2 * PI)
+            stop = 2 * PI;
         }
         else
           diagram3.add(new DiagramPart(0,0,0));

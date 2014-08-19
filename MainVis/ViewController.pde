@@ -144,18 +144,18 @@ public class ViewController
     
     if (level == 3)
     {
-      drawDiagram(3, posX, posY, dp3);
-      drawDiagram(2, posX, posY, dp2);
-      drawDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(3, posX, posY, dp3);
+      drawInteractiveDiagram(2, posX, posY, dp2);
+      drawInteractiveDiagram(1, posX, posY, dp1);
     }
     if (level == 2)
     {
-      drawDiagram(2, posX, posY, dp2);
-      drawDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(2, posX, posY, dp2);
+      drawInteractiveDiagram(1, posX, posY, dp1);
     }
     if (level == 1)
     {
-      drawDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(1, posX, posY, dp1);
     }     
   
   }
@@ -175,18 +175,18 @@ public class ViewController
     
     if (level == 3)
     {
-      drawDiagram(3, posX, posY, dp3);
-      drawDiagram(2, posX, posY, dp2);
-      drawDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(3, posX, posY, dp3);
+      drawInteractiveDiagram(2, posX, posY, dp2);
+      drawInteractiveDiagram(1, posX, posY, dp1);
     }
     if (level == 2)
     {
-      drawDiagram(2, posX, posY, dp2);
-      drawDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(2, posX, posY, dp2);
+      drawInteractiveDiagram(1, posX, posY, dp1);
     }
     if (level == 1)
     {
-      drawDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(1, posX, posY, dp1);
     }     
   }
   
@@ -319,21 +319,86 @@ public class ViewController
       for (DiagramPart p: dp)
       {
         fill(200);
-        boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) <= p.radius;
-        if (p.mouseInside(x,y) && nearCenter){
+        boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.radius;
+        if (p.mouseInside(x,y) && nearCenter)
           arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
-        print(p.getRadius());
-        print('\t');
-        print(sqrt(sq(mouseX-x) - sq(mouseY-y)));
-        print('\t');
-        print(x);
-        print('\t');
-        print(mouseX);
-        print('\t');
-        print(y);
-        print('\t');
-        println(mouseY);
+        else
+        arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+      }
+    }
+  }
+  
+  void drawInteractiveDiagram(int level, float x, float y, ArrayList<DiagramPart> dp)
+  {
+    int colorIndex1, colorIndex2;
+    noStroke();
+    if (level == 3)
+    {
+      boolean first = true;
+      for (DiagramPart p: dp)
+      {
+        if (first == true)
+        {
+          fill(60);
+          ellipse(x,y,p.radius + 20, p.radius + 20);
+          first = false;
         }
+        if (p != null)
+        {
+          colorIndex1 = sc.getSectorIndex(dp.indexOf(p));
+          colorIndex2 = sc.getSectorIndex(colorIndex1, dp.indexOf(p));
+          if ((colorIndex1 >= 0) && colorIndex2 >= 0)
+          {
+            fill(sc.getSchoolColor(colorIndex1, colorIndex2));
+            /*boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.getRadius();
+            boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < ((2.0/3.0) * p.getRadius());
+            if (p.mouseInside(x,y) && nearCenter && !lowerLevel)
+              arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+            else*/
+              arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+          }
+        }
+      }
+    }
+    
+    if (level == 2) 
+    {
+      int c = 100;
+      for (DiagramPart p: dp)
+      {
+        if (p != null)
+        {
+          colorIndex1 = dp.indexOf(p);
+          
+          if (colorIndex1 >= 0)
+          {
+            fill(sc.getSchoolColor(colorIndex1));
+            
+            /*boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.getRadius();
+            boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0) * p.getRadius();
+            print(nearCenter);
+            print('\t');
+            print(lowerLevel);
+            print('\t');
+            print(p.getRadius());
+            print('\t');
+            println((1.0/2.0) * p.getRadius());
+            if (p.mouseInside(x,y) && (nearCenter && !lowerLevel))
+              arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+            else*/
+              arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+          }
+        }
+      }
+    }
+    if (level == 1)
+    {
+      for (DiagramPart p: dp)
+      {
+        fill(200);
+        boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.radius;
+        if (p.mouseInside(x,y) && nearCenter)
+          arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
         else
           arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
       }
