@@ -319,10 +319,6 @@ public class ViewController
       for (DiagramPart p: dp)
       {
         fill(200);
-        boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.radius;
-        if (p.mouseInside(x,y) && nearCenter)
-          arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
-        else
         arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
       }
     }
@@ -350,11 +346,11 @@ public class ViewController
           if ((colorIndex1 >= 0) && colorIndex2 >= 0)
           {
             fill(sc.getSchoolColor(colorIndex1, colorIndex2));
-            /*boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.getRadius();
-            boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < ((2.0/3.0) * p.getRadius());
+            boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.getRadius();
+            boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (2.0/6.0)*p.getRadius();
             if (p.mouseInside(x,y) && nearCenter && !lowerLevel)
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
-            else*/
+            else
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
           }
         }
@@ -374,18 +370,12 @@ public class ViewController
           {
             fill(sc.getSchoolColor(colorIndex1));
             
-            /*boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.getRadius();
-            boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0) * p.getRadius();
-            print(nearCenter);
-            print('\t');
-            print(lowerLevel);
-            print('\t');
-            print(p.getRadius());
-            print('\t');
-            println((1.0/2.0) * p.getRadius());
-            if (p.mouseInside(x,y) && (nearCenter && !lowerLevel))
+            boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.getRadius();
+            boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/4.0)*p.getRadius();
+
+            if (p.mouseInside(x,y) && nearCenter && !lowerLevel)
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
-            else*/
+            else
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
           }
         }
@@ -396,7 +386,8 @@ public class ViewController
       for (DiagramPart p: dp)
       {
         fill(200);
-        boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < p.radius;
+        boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.radius;
+        
         if (p.mouseInside(x,y) && nearCenter)
           arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
         else
