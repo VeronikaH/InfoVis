@@ -6,6 +6,7 @@ public class Overview
   float oHeight;
   boolean mouseInside = false;
   ArrayList<Diagram> diagrams;
+  boolean[] selection = new boolean[26];
   
   public Overview(int x, int y, float oWidth, float oHeight)
   {
@@ -15,7 +16,7 @@ public class Overview
     this.oHeight = oHeight;
   }
   
-  void drawOverview(ArrayList<DataRecord> dataRecords, ArrayList<Diagram> diagrams)
+  void drawOverview(ArrayList<DataRecord> dataRecords, ArrayList<Diagram> diagrams, boolean[] selection)
   {
     fill(120);
     stroke(120);
@@ -29,6 +30,7 @@ public class Overview
     int circlesDrawn = 0;
     int circlesInRow = 6;
     int age = 5;
+    int counter = 0;
     
     for (DataRecord dr : dataRecords)
     {
@@ -51,6 +53,14 @@ public class Overview
         ArrayList<DiagramPart> dp1 = d.getDiagram1();
         ArrayList<DiagramPart> dp2 = d.getDiagram2();
         ArrayList<DiagramPart> dp3 = d.getDiagram3();
+        
+        if(selection[counter])
+        {
+          fill(0);
+          stroke(60);
+          rect(posX-22,posY-22,43,45);
+        }
+        counter++;
         
         drawDiagram(3, posX, posY, dp3);
         drawDiagram(2, posX, posY, dp2);

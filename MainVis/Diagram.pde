@@ -5,6 +5,7 @@ public class Diagram
   ArrayList<DiagramPart> diagram3; 
   float centerX, centerY;
   float maximumRadius;
+  boolean[] selected = new boolean[26];
   
   
   public Diagram(ArrayList<DataRecord> dataSet, float maxRadius, int choice, float x, float y)
@@ -104,6 +105,49 @@ public class Diagram
           diagram3.add(new DiagramPart(0,0,0));
       }
     }
+  }
+  
+  public boolean[] colorBackground()
+  {
+    float x = centerX+100-maximumRadius-24;
+    float y = centerY+100-maximumRadius-25;
+    float rWidth = maximumRadius + 2;
+    float rHeight = maximumRadius + 4;
+    int circlesInRow = 7;
+    int circlesDrawn = 0;
+    boolean inside = false;
+    int counter = 0;
+    for (int i = 0; i < 26; ++i)
+    {
+      fill(0,0,0,0);
+      strokeWeight(1);
+      if (mouseX < x + rWidth && mouseX > x && mouseY < y + rHeight && mouseY > y || selected[i])
+      {
+        stroke(255);
+        inside = true;
+        if (mousePressed)
+        {
+          if (!selected[i])
+            selected[i] = true;
+        }
+      }
+      else
+      {
+        stroke(0);
+      }
+      
+       rect(x,y, rWidth, rHeight);
+       x += maximumRadius+10;
+       circlesDrawn++;
+       if (circlesDrawn%7 == 0 && circlesDrawn != 0)
+       {
+         y += maximumRadius+10;
+         x = centerX+100-maximumRadius-24;
+       }
+    }
+    //if(inside)
+      //cursor(HAND);
+    return selected;
   }
   
   public float getCenterX() 
