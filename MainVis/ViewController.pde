@@ -374,6 +374,12 @@ public class ViewController
             boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.getRadius();
             boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (2.0/6.0)*p.getRadius();
             if (p.mouseInside(x, y) && nearCenter && !lowerLevel)
+              /*if (moussePressed())
+              {
+                int index = indexOf(p);
+                // todo how to know if all, male or female
+                drawAdditionalInfo();
+              }*/
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
             else
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
