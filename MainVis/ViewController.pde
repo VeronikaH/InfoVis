@@ -60,6 +60,14 @@ public class ViewController
       {
         selection = d.colorBackground();
       }
+      selectedDataRecords = new ArrayList<DataRecord>();
+      for (int i = 0; i < 26; ++i)
+      {
+        if (selection[i])
+          selectedDataRecords.add(dataRecords.get(i));
+      }
+      if (selectedDataRecords.size() == 0)
+        selectedDataRecords = dataRecords;
     }
 
     else 
@@ -75,24 +83,38 @@ public class ViewController
         firstRun = false;
         if (viewModus == 2)
         {
-          //drawBigCircle(500.0, 3);
           fill(255); 
           textSize(22);
-          text("Gesamt", 750, 750);
+          if (selectedDataRecords.size() == 26)
+            text("5 - 30 Jahre", 750, 700);
+          else
+          {
+            String age = "";
+            for(DataRecord dr : selectedDataRecords)
+              age += dr.getAge().get(0)+", ";
+            age = age.substring(0,age.length()-2);
+            text(age + " Jahre", 600, 750);
+          }
         }
         else if (viewModus == 3)
         {
           fill(255);
           stroke(255);
           strokeWeight(2);
-          line(800, 250, 800, 700);
-
-          //drawGenderCircle(400.0,1,3);
-          //drawGenderCircle(400.0,2,3);
-
+          line(800, 150, 800, 600);
           textSize(22);
-          text("Männer", width/4 +100, 750);
-          text("Frauen", 3 * (width/4)-100, 750);
+          if (selectedDataRecords.size() == 26)
+            text("5 - 30 Jahre", 750, 750);
+          else
+          {
+            String age = "";
+            for(DataRecord dr : selectedDataRecords)
+              age += dr.getAge().get(0)+", ";
+            age = age.substring(0,age.length()-2);
+            text(age + " Jahre", 600, 750);
+          }
+          text("Männer", width/4 +200, 650);
+          text("Frauen", 3 * (width/4), 650);
         }
       }
       buttonG.updateRight();
@@ -134,13 +156,13 @@ public class ViewController
     {
       posX = width/4 + 220;
       posY = height/2;
-      d = new Diagram(dataRecords, maxRadius, 2, posX, posY);
+      d = new Diagram(selectedDataRecords, maxRadius, 2, posX, posY);
     }
     else
     {
       posX = 3 * (width/4) + 20;
       posY = height/2;
-      d = new Diagram(dataRecords, maxRadius, 3, posX, posY);
+      d = new Diagram(selectedDataRecords, maxRadius, 3, posX, posY);
     }
 
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
@@ -171,7 +193,7 @@ public class ViewController
     float posX = width/2.0 + 50;
     float posY = height/2.0;
 
-    Diagram d = new Diagram(dataRecords, maxRadius, 1, posX, posY);
+    Diagram d = new Diagram(selectedDataRecords, maxRadius, 1, posX, posY);
 
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
     ArrayList<DiagramPart> dp2 = d.getDiagram2();
