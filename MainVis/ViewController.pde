@@ -389,15 +389,14 @@ public class ViewController
       }
       if (desiredInfo >= 0)
       {
-        textSize(12);
-        fill(200);
-        text(info.getList(dataSet)[desiredInfo], mouseX, mouseY);
+        drawInfo(info, desiredInfo, dataSet,3);
       }
     }
 
     if (level == 2) 
     {
       int c = 100;
+      int desiredInfo = -1;
       for (DiagramPart p: dp)
       {
         if (p != null)
@@ -412,25 +411,84 @@ public class ViewController
             boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/4.0)*p.getRadius();
 
             if (p.mouseInside(x, y) && nearCenter && !lowerLevel)
+            {
+              if (mousePressed)
+                desiredInfo = dp.indexOf(p);
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+            }
             else
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
           }
         }
       }
+      if (desiredInfo >= 0)
+      {
+        drawInfo(info, desiredInfo, dataSet,2);
+      }
     }
     if (level == 1)
     {
+      int desiredInfo = -1;
       for (DiagramPart p: dp)
       {
         fill(200);
         boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.radius;
 
         if (p.mouseInside(x, y) && nearCenter)
+        {
+          if (mousePressed)
+            desiredInfo = dp.indexOf(p);
           arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+        }
         else
           arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
       }
+      
+      if (desiredInfo >= 0)
+      {
+        drawInfo(info, desiredInfo, dataSet,1);
+      }
+    }
+  }
+  
+  void drawInfo(DataRecord info, int desiredInfo, int dataSet, int level)
+  {
+    textSize(12);
+    fill(200);
+    int posX, posY;
+ 
+      posX = width-200;
+      posY = height/2;
+
+   String t = "";
+   float w;
+    if (desiredInfo <= 1)
+    {
+      t += info.getList(dataSet)[0] + "\t Individuen in dieser Bevölkerungsgruppe \n";
+      t += info.getList(dataSet)[1] + "\t Individuen, die sich in irgendeiner Weise bilden";
+      w = textWidth(t); 
+      rect(mouseX, mouseY-3*12, w+8, 3*12);
+      fill(20);
+      text(t, mouseX+4, mouseY-24);
+    }
+    else
+    {
+      if (level == 3)
+      {
+        int index1 = sc.getSectorIndex(desiredInfo);
+        int index2 = sc.getSectorIndex(index1, desiredInfo);
+        t += info.getList(dataSet)[desiredInfo] + " % " + sc.getSchoolName(index1,index2);
+      }
+      else 
+      {
+        int index = desiredInfo;
+        t += info.getList(dataSet)[desiredInfo] + " % " + sc.getSchoolName(index);
+      }
+        
+      w = textWidth(t); 
+      rect(mouseX,mouseY-2*12, w+8, 2*12);
+      fill(20);
+      text(t, mouseX+4, mouseY-6);
     }
   }
 
