@@ -6,6 +6,7 @@ public class Diagram
   float centerX, centerY;
   float maximumRadius;
   boolean[] selected = new boolean[26];
+  DataRecord data;
   
   
   public Diagram(ArrayList<DataRecord> dataSet, float maxRadius, int choice, float x, float y)
@@ -21,18 +22,21 @@ public class Diagram
     else
       combinedData = dataSet.get(0);
       
+    data = combinedData;
     Diagram d = new Diagram(combinedData, maxRadius, choice, x, y);
     this.diagram1 = d.getDiagram1();
     this.diagram2 = d.getDiagram2();
     this.diagram3 = d.getDiagram3();   
   }
   
-  public Diagram(DataRecord data, float maxRadius, int choice, float x, float y)
+  public Diagram(DataRecord inputData, float maxRadius, int choice, float x, float y)
   // choice {1,2,3} -> general, male, female 
   {
     diagram1 = new ArrayList<DiagramPart>(); 
     diagram2 = new ArrayList<DiagramPart>(); 
     diagram3 = new ArrayList<DiagramPart>(); 
+    
+    data = inputData;
     
     this.centerX = x;
     this.centerY = y;
@@ -183,6 +187,11 @@ public class Diagram
   public ArrayList<DiagramPart> getDiagram3() 
   {
     return this.diagram3;
+  }
+  
+  public DataRecord getData()
+  {
+    return this.data;
   }
   
 }

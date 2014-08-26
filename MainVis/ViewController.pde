@@ -171,18 +171,18 @@ public class ViewController
 
     if (level == 3)
     {
-      drawInteractiveDiagram(3, posX, posY, dp3);
-      drawInteractiveDiagram(2, posX, posY, dp2);
-      drawInteractiveDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(3, posX, posY, dp3, d.getData(), gender+1);
+      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(), gender+1);
+      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(), gender+1);
     }
     if (level == 2)
     {
-      drawInteractiveDiagram(2, posX, posY, dp2);
-      drawInteractiveDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(), gender+1);
+      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(), gender+1);
     }
     if (level == 1)
     {
-      drawInteractiveDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(), gender+1);
     }
   }
 
@@ -201,18 +201,18 @@ public class ViewController
 
     if (level == 3)
     {
-      drawInteractiveDiagram(3, posX, posY, dp3);
-      drawInteractiveDiagram(2, posX, posY, dp2);
-      drawInteractiveDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(3, posX, posY, dp3, d.getData(),1);
+      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(),1);
+      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(),1);
     }
     if (level == 2)
     {
-      drawInteractiveDiagram(2, posX, posY, dp2);
-      drawInteractiveDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(),1);
+      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(),1);
     }
     if (level == 1)
     {
-      drawInteractiveDiagram(1, posX, posY, dp1);
+      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(),1);
     }
   }
 
@@ -349,13 +349,16 @@ public class ViewController
     }
   }
 
-  void drawInteractiveDiagram(int level, float x, float y, ArrayList<DiagramPart> dp)
+
+  void drawInteractiveDiagram(int level, float x, float y, ArrayList<DiagramPart> dp, DataRecord info, int dataSet)
+  // dataSet: 1->general, 2->male, 3->female 
   {
     int colorIndex1, colorIndex2;
     noStroke();
     if (level == 3)
     {
       boolean first = true;
+      int desiredInfo = -1;
       for (DiagramPart p: dp)
       {
         if (first == true)
@@ -374,17 +377,21 @@ public class ViewController
             boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.getRadius();
             boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (2.0/6.0)*p.getRadius();
             if (p.mouseInside(x, y) && nearCenter && !lowerLevel)
-              /*if (moussePressed())
-              {
-                int index = indexOf(p);
-                // todo how to know if all, male or female
-                drawAdditionalInfo();
-              }*/
+            {
+              if (mousePressed)
+                desiredInfo = dp.indexOf(p);
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+            }
             else
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
           }
         }
+      }
+      if (desiredInfo >= 0)
+      {
+        textSize(12);
+        fill(200);
+        text(info.getList(dataSet)[desiredInfo], mouseX, mouseY);
       }
     }
 
