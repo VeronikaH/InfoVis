@@ -480,7 +480,7 @@ public class ViewController
     if (level == 1)
     {
       float val = info.getList(dataSet)[1]/info.getList(dataSet)[0];
-      t += df.format(val) + " % in Bildungssystem";
+      t += df.format(val*100.0) + " % in Bildungssystem";
       w = textWidth(t); 
       text(t, posX, posY);
     }
