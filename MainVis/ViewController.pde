@@ -1,5 +1,6 @@
 import java.lang.*;
 import javax.swing.*;
+import java.text.DecimalFormat;
 
 public class ViewController
 {
@@ -453,23 +454,35 @@ public class ViewController
   
   void drawInfo(DataRecord info, int desiredInfo, int dataSet, int level)
   {
-    textSize(12);
-    fill(200);
+    DecimalFormat df = new DecimalFormat("0.00");
+    int size = 24;
+    textSize(size);
+    fill(250);
     int posX, posY;
- 
-      posX = width-200;
-      posY = height/2;
+    if (dataSet == 1)
+    {
+      posX = width/2;
+      posY = height/2 - 250;
+    }
+    else if (dataSet == 2)
+    {
+      posX = width/2 - 200;
+      posY = height/2 - 250;
+    }
+    else
+    {
+      posX = width/2 + 200;
+      posY = height/2 - 250;
+    }
 
    String t = "";
    float w;
-    if (desiredInfo <= 1)
+    if (level == 1)
     {
-      t += info.getList(dataSet)[0] + "\t Individuen in dieser Bevölkerungsgruppe \n";
-      t += info.getList(dataSet)[1] + "\t Individuen, die sich in irgendeiner Weise bilden";
+      float val = info.getList(dataSet)[1]/info.getList(dataSet)[0];
+      t += df.format(val) + " % in Bildungssystem";
       w = textWidth(t); 
-      rect(mouseX, mouseY-3*12, w+8, 3*12);
-      fill(20);
-      text(t, mouseX+4, mouseY-24);
+      text(t, posX, posY);
     }
     else
     {
@@ -477,18 +490,29 @@ public class ViewController
       {
         int index1 = sc.getSectorIndex(desiredInfo);
         int index2 = sc.getSectorIndex(index1, desiredInfo);
-        t += info.getList(dataSet)[desiredInfo] + " % " + sc.getSchoolName(index1,index2);
+        t += df.format(info.getList(dataSet)[desiredInfo]) + " % " + sc.getSchoolName(index1,index2);
       }
       else 
       {
+        float sum;
         int index = desiredInfo;
-        t += info.getList(dataSet)[desiredInfo] + " % " + sc.getSchoolName(index);
+        if (desiredInfo == 0)
+          sum = info.getList(dataSet)[2];
+        else if (desiredInfo == 1)
+          sum = info.getList(dataSet)[3];
+        else if (desiredInfo == 2)
+          sum = info.getList(dataSet)[4] + info.getList(dataSet)[5] + info.getList(dataSet)[6] + info.getList(dataSet)[7] + info.getList(dataSet)[8];
+        else if (desiredInfo == 3)
+          sum = info.getList(dataSet)[9] + info.getList(dataSet)[10] + info.getList(dataSet)[11] + info.getList(dataSet)[12];
+        else if (desiredInfo == 4)
+          sum = info.getList(dataSet)[13] + info.getList(dataSet)[14];
+        else
+          sum = info.getList(dataSet)[15];
+        t += df.format(sum) + " % " + sc.getSchoolName(index);
       }
         
       w = textWidth(t); 
-      rect(mouseX,mouseY-2*12, w+8, 2*12);
-      fill(20);
-      text(t, mouseX+4, mouseY-6);
+      text(t, posX, posY);
     }
   }
 
