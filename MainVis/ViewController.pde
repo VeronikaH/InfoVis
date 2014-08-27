@@ -193,27 +193,40 @@ public class ViewController
     // draw big circle (initializing)
     float posX = width/2.0 + 50;
     float posY = height/2.0;
-
+    
     Diagram d = new Diagram(selectedDataRecords, maxRadius, 1, posX, posY);
-
+      
+    
+    textSize(24);
+    DataRecord dr = d.getData();
+    String t1 = ((Integer)(Math.round(dr.getList(1)[0]))).toString()+" Individuen in dieser Bevölkerungsgruppe";
+    String t2 = ((Integer)(Math.round(dr.getList(1)[1]))).toString()+" in System erfasst";
+    int w = (int) Math.max(textWidth(t1), textWidth(t2));
+    fill(60);
+    noStroke();
+    rect(width/2, 131, w, 50);
+    fill(250);
+    text( t1 , width/2, 150);
+    //text( t2 , width/2, 175);
+    
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
     ArrayList<DiagramPart> dp2 = d.getDiagram2();
     ArrayList<DiagramPart> dp3 = d.getDiagram3();
 
     if (level == 3)
     {
-      drawInteractiveDiagram(3, posX, posY, dp3, d.getData(),1);
-      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(),1);
-      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(),1);
+      drawInteractiveDiagram(3, posX, posY, dp3, dr,1);
+      drawInteractiveDiagram(2, posX, posY, dp2, dr,1);
+      drawInteractiveDiagram(1, posX, posY, dp1, dr,1);
     }
     if (level == 2)
     {
-      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(),1);
-      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(),1);
+      drawInteractiveDiagram(2, posX, posY, dp2, dr,1);
+      drawInteractiveDiagram(1, posX, posY, dp1, dr,1);
     }
     if (level == 1)
     {
-      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(),1);
+      drawInteractiveDiagram(1, posX, posY, dp1, dr,1);
     }
   }
 
@@ -461,7 +474,7 @@ public class ViewController
     int posX, posY;
     if (dataSet == 1)
     {
-      posX = width/2;
+      posX = 3* (width/4);
       posY = height/2 - 250;
     }
     else if (dataSet == 2)
@@ -483,14 +496,18 @@ public class ViewController
       t += df.format(val*100.0) + " % in Bildungssystem";
       w = textWidth(t); 
       text(t, posX, posY);
+      textSize(size*3/4);
+      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val))).toString()+" Individuen)", posX, posY + size);
     }
     else
     {
+      float val;
       if (level == 3)
       {
         int index1 = sc.getSectorIndex(desiredInfo);
         int index2 = sc.getSectorIndex(index1, desiredInfo);
-        t += df.format(info.getList(dataSet)[desiredInfo]) + " % " + sc.getSchoolName(index1,index2);
+        val = info.getList(dataSet)[desiredInfo];
+        t += df.format(val) + " % " + sc.getSchoolName(index1,index2);
       }
       else 
       {
@@ -508,11 +525,15 @@ public class ViewController
           sum = info.getList(dataSet)[13] + info.getList(dataSet)[14];
         else
           sum = info.getList(dataSet)[15];
+          
+        val = sum;
         t += df.format(sum) + " % " + sc.getSchoolName(index);
       }
         
       w = textWidth(t); 
       text(t, posX, posY);
+      textSize(size*3/4);
+      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val/100.0))).toString()+" Individuen)", posX, posY + size);
     }
   }
 
