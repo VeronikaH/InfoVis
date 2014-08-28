@@ -111,34 +111,6 @@ public class Diagram
     }
   }
   
-  public void mouseClicked()
-  {
-    /*float x = centerX+100-maximumRadius-32;
-    float y = centerY+100-maximumRadius-32;
-    float rWidth = maximumRadius + 2;
-    float rHeight = maximumRadius + 2;
-    int circlesInRow = 7;
-    int circlesDrawn = 0;
-    int counter = 0;
-    for (int i = 0; i < 26; ++i)
-    {
-      if (mouseX < x + rWidth && mouseX > x && mouseY < y + rHeight && mouseY > y)
-      {
-        if (selected[i])
-          selected[i] = false;
-        else
-          selected[i] = true;
-      }
-    }
-    x += maximumRadius+10;
-    circlesDrawn++;
-    if (circlesDrawn%7 == 0 && circlesDrawn != 0)
-    {
-      y += maximumRadius+10;
-      x = centerX+100-maximumRadius-32;
-    }*/
-  }
-  
   public boolean[] colorBackground()
   {
     float x = centerX+100-maximumRadius-32;

@@ -156,33 +156,44 @@ public class ViewController
       {
         // update two big circles when clicked
         int l = getLevel();
-        drawGenderCircle(400.0, 1, l);
-        drawGenderCircle(400.0, 2, l);
+        drawGenderCircles(400.0, l);
+        drawGenderCircles(400.0, l);
       }
     }
   }
 
-  void drawGenderCircle(float maxRadius, int gender, int level)
+  void drawGenderCircles(float maxRadius, int level)
   {
     float posX, posY;
-    Diagram d;
+    Diagram dMale, dFemale;
     String t2 = "";
     String t1;
+
+    posX = width/4 + 220;
+    posY = height/2+50;
+    dMale = new Diagram(selectedDataRecords, maxRadius, 2, posX, posY);
+
+    posX = 3 * (width/4) + 20;
+    posY = height/2+50;
+    dFemale = new Diagram(selectedDataRecords, maxRadius, 3, posX, posY);
     
-    if (gender == 1)
+    drawGenderInteractiveDiagrams(level, dMale, dFemale);
+    if (level == 3)
     {
-      posX = width/4 + 220;
-      posY = height/2+50;
-      d = new Diagram(selectedDataRecords, maxRadius, 2, posX, posY);
+      drawGenderInteractiveDiagrams(3, dMale, dFemale);
+      drawGenderInteractiveDiagrams(2, dMale, dFemale);
+      drawGenderInteractiveDiagrams(1, dMale, dFemale);
     }
-    else
+    if (level == 2)
     {
-      posX = 3 * (width/4) + 20;
-      posY = height/2+50;
-      d = new Diagram(selectedDataRecords, maxRadius, 3, posX, posY);
+      drawGenderInteractiveDiagrams(2, dMale, dFemale);
+      drawGenderInteractiveDiagrams(1, dMale, dFemale);
     }
-    
-    DataRecord dr = d.getData();
+    if (level == 1)
+    {
+      drawGenderInteractiveDiagrams(level, dMale, dFemale);
+    }
+    DataRecord dr = dMale.getData();
     int size = 24;
     noStroke();
     textSize(size);
@@ -201,26 +212,6 @@ public class ViewController
     fill(250);
     text( t2 , width/2-100, 170);
     
-
-    ArrayList<DiagramPart> dp1 = d.getDiagram1();
-    ArrayList<DiagramPart> dp2 = d.getDiagram2();
-    ArrayList<DiagramPart> dp3 = d.getDiagram3();
-
-    if (level == 3)
-    {
-      drawInteractiveDiagram(3, posX, posY, dp3, d.getData(), gender+1);
-      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(), gender+1);
-      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(), gender+1);
-    }
-    if (level == 2)
-    {
-      drawInteractiveDiagram(2, posX, posY, dp2, d.getData(), gender+1);
-      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(), gender+1);
-    }
-    if (level == 1)
-    {
-      drawInteractiveDiagram(1, posX, posY, dp1, d.getData(), gender+1);
-    }
   }
 
   // TODO selectedDataRecords
@@ -399,7 +390,149 @@ public class ViewController
     }
   }
 
+  void drawGenderInteractiveDiagrams(int level, Diagram dMale, Diagram dFemale)
+  {
+    
+    DataRecord info = dMale.getData();
+    int p2;
+    int colorIndex1, colorIndex2;
+    noStroke();
+    
+    if (level == 3)
+    {
+      
+      ArrayList<DiagramPart> dpMale = dMale.getDiagram3();    
+      ArrayList<DiagramPart> dpFemale = dFemale.getDiagram3();
+      
+      boolean first = true;
+      int desiredInfo = -1;
 
+      for (DiagramPart p: dpMale)
+      {
+        p2 = dpMale.indexOf(p);
+        if (first == true)
+        {
+          fill(60);
+          ellipse(dMale.getCenterX(), dMale.getCenterY(), p.radius + 20, p.radius + 20); 
+          ellipse(dFemale.getCenterX(), dFemale.getCenterY(), p.radius + 20, p.radius + 20);
+          first = false;
+        }
+        if (p != null)
+        {
+          colorIndex1 = sc.getSectorIndex(dpMale.indexOf(p));
+          colorIndex2 = sc.getSectorIndex(colorIndex1, dpMale.indexOf(p));
+          if ((colorIndex1 >= 0) && colorIndex2 >= 0)
+          {
+            fill(sc.getSchoolColor(colorIndex1, colorIndex2));
+            boolean nearCenterMale = sqrt(sq(mouseX-dMale.getCenterX()) + sq(mouseY-dMale.getCenterY())) < (1.0/2.0)*p.getRadius();
+            boolean lowerLevelMale = sqrt(sq(mouseX-dMale.getCenterX()) + sq(mouseY-dMale.getCenterY())) < (2.0/6.0)*p.getRadius();
+            boolean nearCenterFemale = sqrt(sq(mouseX-dFemale.getCenterX()) + sq(mouseY-dFemale.getCenterY())) < (1.0/2.0)*dpFemale.get(p2).getRadius();
+            boolean lowerLevelFemale = sqrt(sq(mouseX-dFemale.getCenterX()) + sq(mouseY-dFemale.getCenterY())) < (2.0/6.0)*dpFemale.get(p2).getRadius();
+            if ((p.mouseInside(dMale.getCenterX(), dMale.getCenterY()) && nearCenterMale && !lowerLevelMale && mousePressed) || (dpFemale.get(p2).mouseInside(dFemale.getCenterX(), dFemale.getCenterY()) && nearCenterFemale && !lowerLevelFemale && mousePressed))
+            {
+              desiredInfo = p2;
+              legend.setTags(1,colorIndex1,colorIndex2);
+              arc(dMale.getCenterX(), dMale.getCenterY(), p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+              arc(dFemale.getCenterX(), dFemale.getCenterY(), p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+              legend.drawLegend(level);
+              noStroke();
+            }
+            else 
+            {
+              arc(dMale.getCenterX(), dMale.getCenterY(), p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+              arc(dFemale.getCenterX(), dFemale.getCenterY(), p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+              legend.resetTags();
+            }
+          }
+        }
+      }
+      if (desiredInfo >= 0)
+      {
+        drawInfo(info, desiredInfo, 2,3);
+      }
+    }
+
+    if (level == 2) 
+    {
+      ArrayList<DiagramPart> dpMale = dMale.getDiagram2();    
+      ArrayList<DiagramPart> dpFemale = dFemale.getDiagram2();
+      int c = 100;
+      int desiredInfo = -1;
+      for (DiagramPart p: dpMale)
+      {
+        if (p != null)
+        {
+          colorIndex1 = dpMale.indexOf(p);
+          p2 = colorIndex1;
+
+          if (colorIndex1 >= 0)
+          {
+            fill(sc.getSchoolColor(colorIndex1));
+            boolean nearCenterMale = sqrt(sq(mouseX-dMale.getCenterX()) + sq(mouseY-dMale.getCenterY())) < (1.0/2.0)*p.getRadius();
+            boolean lowerLevelMale = sqrt(sq(mouseX-dMale.getCenterX()) + sq(mouseY-dMale.getCenterY())) < (2.0/6.0)*p.getRadius();
+            boolean nearCenterFemale = sqrt(sq(mouseX-dFemale.getCenterX()) + sq(mouseY-dFemale.getCenterY())) < (1.0/2.0)*dpFemale.get(p2).getRadius();
+            boolean lowerLevelFemale = sqrt(sq(mouseX-dFemale.getCenterX()) + sq(mouseY-dFemale.getCenterY())) < (2.0/6.0)*dpFemale.get(p2).getRadius();
+            if ((p.mouseInside(dMale.getCenterX(), dMale.getCenterY()) && nearCenterMale && !lowerLevelMale && mousePressed) || (dpFemale.get(p2).mouseInside(dFemale.getCenterX(), dFemale.getCenterY()) && nearCenterFemale && !lowerLevelFemale && mousePressed))
+            {
+              desiredInfo = p2;
+              legend.setDiagramTag(1);
+              legend.setSectorTag(colorIndex1);
+              arc(dMale.getCenterX(), dMale.getCenterY(), p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+              arc(dFemale.getCenterX(), dFemale.getCenterY(), p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+              legend.drawLegend(level);
+              noStroke();
+            }
+            else
+            {
+              arc(dMale.getCenterX(), dMale.getCenterY(), p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+              arc(dFemale.getCenterX(), dFemale.getCenterY(), p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+              legend.resetTags();
+            }
+          }
+        }
+      }
+      if (desiredInfo >= 0)
+      {
+        drawInfo(info, desiredInfo, 2,2);
+      }
+    }
+    if (level == 1)
+    {
+      ArrayList<DiagramPart> dpMale = dMale.getDiagram1();    
+      ArrayList<DiagramPart> dpFemale = dFemale.getDiagram1();
+      
+      int desiredInfo = -1;
+      for (DiagramPart p: dpMale)
+      {
+        p2 = dpMale.indexOf(p);
+        fill(200);
+        boolean nearCenterMale = sqrt(sq(mouseX-dMale.getCenterX()) + sq(mouseY-dMale.getCenterY())) < (1.0/2.0)*p.getRadius();
+        boolean nearCenterFemale = sqrt(sq(mouseX-dFemale.getCenterX()) + sq(mouseY-dFemale.getCenterY())) < (1.0/2.0)*dpFemale.get(p2).getRadius();
+
+        if ((p.mouseInside(dMale.getCenterX(), dMale.getCenterY()) && nearCenterMale && mousePressed) || (dpFemale.get(p2).mouseInside(dFemale.getCenterX(), dFemale.getCenterY()) && nearCenterFemale && mousePressed))
+        {
+          desiredInfo = dpMale.indexOf(p);
+          legend.setDiagramTag(1);
+          arc(dMale.getCenterX(), dMale.getCenterY(), p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+          arc(dFemale.getCenterX(), dFemale.getCenterY(), p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+          legend.drawLegend(level);
+          noStroke();
+        }
+        else
+        {
+          arc(dMale.getCenterX(), dMale.getCenterY(), p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+          arc(dFemale.getCenterX(), dFemale.getCenterY(), p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+          legend.resetTags();
+        }
+      }
+      
+      if (desiredInfo >= 0)
+      {
+        drawInfo(info, desiredInfo, 2,1);
+      }
+    }
+  }
+  
   void drawInteractiveDiagram(int level, float x, float y, ArrayList<DiagramPart> dp, DataRecord info, int dataSet)
   // dataSet: 1->general, 2->male, 3->female 
   {
@@ -474,9 +607,11 @@ public class ViewController
               legend.drawLegend(level);
               noStroke();
             }
-            else
+            else 
+            {
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
               legend.resetTags();
+            }
           }
         }
       }
@@ -502,8 +637,10 @@ public class ViewController
           noStroke();
         }
         else
+        {
           arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
           legend.resetTags();
+        }
       }
       
       if (desiredInfo >= 0)
@@ -515,29 +652,39 @@ public class ViewController
   
   void drawInfo(DataRecord info, int desiredInfo, int dataSet, int level)
   {
-    DecimalFormat df = new DecimalFormat("0.00");
-    int size = 24;
-    textSize(size);
-    fill(250);
     int posX, posY;
     if (dataSet == 1)
     {
       posX = 3* (width/4);
       posY = height/2 - 150;
+      printText(posX, posY, info, desiredInfo, dataSet, level);
     }
     else if (dataSet == 2)
     {
       posX = width/2 - 260;
       posY = height/2 - 150;
+      
+      printText(posX, posY, info, desiredInfo, dataSet, level);
+      printText(posX+460, posY, info, desiredInfo, 3, level);
     }
     else
     {
       posX = width/2 + 200;
       posY = height/2 - 150;
+      
+      printText(posX, posY, info, desiredInfo, dataSet, level);
+      printText(posX-460, posY, info, desiredInfo, 2, level);
     }
+  }
 
-   String t = "";
-   float w;
+  void printText(int posX, int posY, DataRecord info, int desiredInfo, int dataSet, int level)
+  {
+    DecimalFormat df = new DecimalFormat("0.00");
+    int size = 24;
+    textSize(size);
+    fill(250);
+    String t = "";
+    float w;
     if (level == 1)
     {
       float val = info.getList(dataSet)[1]/info.getList(dataSet)[0];
@@ -545,7 +692,7 @@ public class ViewController
       w = textWidth(t); 
       text(t, posX, posY);
       textSize(size*3/4);
-      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val))).toString()+" Personen)", posX, posY + size);
+      text("("+ ((Integer)(Math.round(info.getList(dataSet)[0] * val))).toString()+" Personen)", posX, posY + size);
     }
     else
     {
@@ -581,10 +728,10 @@ public class ViewController
       w = textWidth(t); 
       text(t, posX, posY);
       textSize(size*3/4);
-      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val/100.0))).toString()+" Personen)", posX, posY + size);
+      text("("+ ((Integer)(Math.round(info.getList(dataSet)[0] * val/100.0))).toString()+" Personen)", posX, posY + size);
     }
   }
-
+  
   void drawHeadline()
   {
     fill(255);

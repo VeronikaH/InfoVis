@@ -47,6 +47,7 @@ public class DiagramPart
    else
      return false;  
   }
+  
   float normalizeAngle(float angle) 
   {
     float result = angle % (2 * PI);
