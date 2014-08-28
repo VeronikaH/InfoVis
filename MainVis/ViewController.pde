@@ -86,9 +86,6 @@ public class ViewController
         buttonG.initiateRight();
         buttonGg.initiateRight();
         firstRun = false;
-        buttonM1.updateLeft();
-        buttonM2.updateLeft();
-        buttonM3.updateLeft();
         if (viewModus == 2)
         {
           fill(255); 
@@ -109,7 +106,7 @@ public class ViewController
           fill(255);
           stroke(255);
           strokeWeight(2);
-          line(800, 150, 800, 600);
+          line(800, 200, 800, 700);
           textSize(22);
           if (selectedDataRecords.size() == 26)
             text("5 - 30 Jahre", 750, 750);
@@ -121,9 +118,16 @@ public class ViewController
             age = age.substring(0,age.length()-2);
             text(age + " Jahre", 600, 750);
           }
-          text("Männer", width/4 +200, 650);
-          text("Frauen", 3 * (width/4), 650);
+          text("Männer", width/4 +200, 700);
+          text("Frauen", 3 * (width/4), 700);
         }
+      }
+      buttonM1.updateLeft();
+      buttonM2.updateLeft();
+      buttonM3.updateLeft();
+      if (activeButtonChanged) {
+        firstRun = true;
+        activeButtonChanged = false;
       }
       buttonG.updateRight();
       buttonGg.updateRight();
@@ -145,7 +149,7 @@ public class ViewController
       if (viewModus == 2)
       {
         // update big circle when clicked
-        drawBigCircle(500.0, 3);
+        drawBigCircle(450.0, 3);
       }
       else if (viewModus == 3)
       {
@@ -163,13 +167,13 @@ public class ViewController
     if (gender == 1)
     {
       posX = width/4 + 220;
-      posY = height/2;
+      posY = height/2+50;
       d = new Diagram(selectedDataRecords, maxRadius, 2, posX, posY);
     }
     else
     {
       posX = 3 * (width/4) + 20;
-      posY = height/2;
+      posY = height/2+50;
       d = new Diagram(selectedDataRecords, maxRadius, 3, posX, posY);
     }
 
@@ -199,7 +203,7 @@ public class ViewController
   {
     // draw big circle (initializing)
     float posX = width/2.0 + 50;
-    float posY = height/2.0;
+    float posY = height/2.0 + 50;
     
     Diagram d = new Diagram(selectedDataRecords, maxRadius, 1, posX, posY);
       
@@ -211,9 +215,9 @@ public class ViewController
     int w = (int) Math.max(textWidth(t1), textWidth(t2));
     fill(60);
     noStroke();
-    rect(width/2, 131, w, 50);
+    rect(width/2-200, 131, w, 50);
     fill(250);
-    text( t1 , width/2, 150);
+    text( t1 , width/2-200, 150);
     //text( t2 , width/2, 175);
     
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
@@ -494,17 +498,17 @@ public class ViewController
     if (dataSet == 1)
     {
       posX = 3* (width/4);
-      posY = height/2 - 250;
+      posY = height/2 - 150;
     }
     else if (dataSet == 2)
     {
-      posX = width/2 - 200;
-      posY = height/2 - 250;
+      posX = width/2 - 260;
+      posY = height/2 - 150;
     }
     else
     {
       posX = width/2 + 200;
-      posY = height/2 - 250;
+      posY = height/2 - 150;
     }
 
    String t = "";
