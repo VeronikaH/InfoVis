@@ -91,14 +91,16 @@ public class ViewController
           fill(255); 
           textSize(22);
           if (selectedDataRecords.size() == 26)
-            text("5 - 30 Jahre", 750, 700);
+            text("5 - 30 Jahre", 800, 800);
           else
           {
             String age = "";
             for(DataRecord dr : selectedDataRecords)
               age += dr.getAge().get(0)+", ";
             age = age.substring(0,age.length()-2);
-            text(age + " Jahre", 600, 750);
+            String s = age + " Jahre";
+            int p = (int) textWidth(s)/2;
+            text(s, (3 * (width/4) + 20 + width/4 + 220)/2 - p, 800);
           }
         }
         else if (viewModus == 3)
@@ -106,20 +108,21 @@ public class ViewController
           fill(255);
           stroke(255);
           strokeWeight(2);
-          line(800, 200, 800, 700);
           textSize(22);
           if (selectedDataRecords.size() == 26)
-            text("5 - 30 Jahre", 750, 750);
+            text("5 - 30 Jahre", 800, 800);
           else
           {
             String age = "";
             for(DataRecord dr : selectedDataRecords)
               age += dr.getAge().get(0)+", ";
             age = age.substring(0,age.length()-2);
-            text(age + " Jahre", 600, 750);
+            String s = age + " Jahre";
+            int p = (int) textWidth(s)/2;
+            text(s, (3 * (width/4) + 20 + width/4 + 220)/2 - p, 800);
           }
-          text("Männer", width/4 +200, 700);
-          text("Frauen", 3 * (width/4), 700);
+          text("Männer", width/4 +200, 750);
+          text("Frauen", 3 * (width/4), 750);
         }
       }
       buttonM1.updateLeft();
@@ -170,11 +173,11 @@ public class ViewController
     String t1;
 
     posX = width/4 + 220;
-    posY = height/2+50;
+    posY = height/2+100;
     dMale = new Diagram(selectedDataRecords, maxRadius, 2, posX, posY);
 
     posX = 3 * (width/4) + 20;
-    posY = height/2+50;
+    posY = height/2+100;
     dFemale = new Diagram(selectedDataRecords, maxRadius, 3, posX, posY);
     
     drawGenderInteractiveDiagrams(level, dMale, dFemale);
@@ -218,8 +221,8 @@ public class ViewController
   void drawBigCircle(float maxRadius, int level)
   {
     // draw big circle (initializing)
-    float posX = width/2.0 + 50;
-    float posY = height/2.0 + 50;
+    float posX = width/2.0 + 100;
+    float posY = height/2.0 + 60;
     
     Diagram d = new Diagram(selectedDataRecords, maxRadius, 1, posX, posY);
       
@@ -231,9 +234,9 @@ public class ViewController
     int w = (int) Math.max(textWidth(t1), textWidth(t2));
     fill(60);
     noStroke();
-    rect(width/2-200, 131, w, 50);
+    rect(width/2-250, 131, w, 50);
     fill(250);
-    text( t1 , width/2-200, 150);
+    text( t1 , width/2-250, 150);
     //text( t2 , width/2, 175);
     
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
@@ -655,8 +658,8 @@ public class ViewController
     int posX, posY;
     if (dataSet == 1)
     {
-      posX = 3* (width/4);
-      posY = height/2 - 150;
+      posX = 3* (width/4)-480;
+      posY = height/2 - 200;
       printText(posX, posY, info, desiredInfo, dataSet, level);
     }
     else if (dataSet == 2)
@@ -688,7 +691,7 @@ public class ViewController
     if (level == 1)
     {
       float val = info.getList(dataSet)[1]/info.getList(dataSet)[0];
-      t += df.format(val*100.0) + " % in Bildungssystem";
+      t += df.format(val*100.0) + " % im Bildungssystem";
       w = textWidth(t); 
       text(t, posX, posY);
       textSize(size*3/4);
@@ -736,8 +739,8 @@ public class ViewController
   {
     fill(255);
     textSize(32);
-    text("Schüler/-innen und Studierende nach Geschlecht,", 350, 50);
-    text("Alter und Bildungsbereichen 2010", 450, 85);
+    text("Schüler/-innen und Studierende nach Geschlecht,", 430, 50);
+    text("Alter und Bildungsbereichen 2010", 480, 85);
   }
 
   void drawHeadlines()

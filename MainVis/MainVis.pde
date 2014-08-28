@@ -56,7 +56,8 @@ SchoolController sc = new SchoolController(new SchoolSector[] {first, second, th
 
 void setup() 
 {
-  size(displayWidth,displayHeight);
+  size(1500,830);
+  //size(displayWidth,displayHeight);
   background(60);
   lines = loadStrings("data.txt");
   readDataFile();

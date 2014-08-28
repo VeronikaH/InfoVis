@@ -113,8 +113,8 @@ public class Diagram
   
   public boolean[] colorBackground()
   {
-    float x = centerX+100-maximumRadius-32;
-    float y = centerY+100-maximumRadius-32;
+    float x = centerX+100-maximumRadius-23;
+    float y = centerY+100-maximumRadius-23;
     float rWidth = maximumRadius + 2;
     float rHeight = maximumRadius + 2;
     int circlesInRow = 7;
@@ -150,7 +150,7 @@ public class Diagram
        if (circlesDrawn%7 == 0 && circlesDrawn != 0)
        {
          y += maximumRadius+10;
-         x = centerX+100-maximumRadius-32;
+         x = centerX+100-maximumRadius-23;
        }
     }
     //if(inside)
