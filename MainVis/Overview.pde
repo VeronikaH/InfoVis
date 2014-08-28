@@ -23,12 +23,12 @@ public class Overview
     rect(x, y, oWidth, oHeight);
     
     this.diagrams = diagrams;
-    int startX = 25;
+    int startX = 10;
     int maxRadius = 40;
     int posX = startX + maxRadius/2;
-    int posY = 40;
+    int posY = 32;
     int circlesDrawn = 0;
-    int circlesInRow = 6;
+    int circlesInRow = 7;
     int age = 5;
     int counter = 0;
     

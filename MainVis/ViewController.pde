@@ -9,12 +9,12 @@ public class ViewController
   int viewModus = 1; // 1 -> Übersicht ist groß, Auswahl einzelner Kreise möglich; 2 -> Overviewfenster, Legende, Dropdownmenu, Gesamt; 3 -> wie 2, aber geschlechtergetrennt
   Legend legend = new Legend();
   Button buttonF = new Button("Fertig", width-100, height-80, 80, 50, null, false);
-  Button buttonG = new Button("Gesamt", width-100, 10, 80, 50, "gesamt.png", true);
-  Button buttonGg = new Button("Geschlechtergetrennt", width-100, 62, 80, 50, "getrennt.png", false);
-  Button buttonM1 = new Button("1", 20, 80, 40, 50, null, true);
-  Button buttonM2 = new Button("2", 65, 80, 40, 50, null, false);
-  Button buttonM3 = new Button("3", 110, 80, 40, 50, null, false);
-  Overview overview = new Overview(20, 18, 280, 225);
+  Button buttonG = new Button("Gesamt", width-100, 15, 80, 50, "gesamt.png", true);
+  Button buttonGg = new Button("Geschlechtergetrennt", width-100, 69, 80, 50, "getrennt.png", false);
+  Button buttonM1 = new Button("1", 100, 200, 35, 50, null, true);
+  Button buttonM2 = new Button("2", 138, 200, 35, 50, null, false);
+  Button buttonM3 = new Button("3", 176, 200, 35, 50, null, false);
+  Overview overview = new Overview(10, 10, 308, 180);
   boolean firstRun = true;
   ArrayList<Diagram> diagrams;
   boolean[] selection = new boolean[26];
@@ -80,9 +80,15 @@ public class ViewController
         overview.drawOverview(dataRecords, diagrams, selection);
         drawHeadlines();
         legend.drawLegend(2);
+        buttonM1.initiateLeft();
+        buttonM2.initiateLeft();
+        buttonM3.initiateLeft();
         buttonG.initiateRight();
         buttonGg.initiateRight();
         firstRun = false;
+        buttonM1.updateLeft();
+        buttonM2.updateLeft();
+        buttonM3.updateLeft();
         if (viewModus == 2)
         {
           fill(255); 
@@ -245,7 +251,7 @@ public class ViewController
   void drawLittleCircles()
   {
     int age = 5;
-    int startX = 200; // falls Seitenleiste hinzukommt, hier Breite abziehen
+    int startX = 330; // falls Seitenleiste hinzukommt, hier Breite abziehen
     int startY = 100;
     int drawingWidth = width - startX; 
     int drawingHeight = height - startY;
@@ -554,7 +560,7 @@ public class ViewController
   {
     fill(255);
     textSize(32);
-    text("Schüler/-innen und Studierende nach Geschlecht,", 320, 50);
+    text("Schüler/-innen und Studierende nach Geschlecht,", 350, 50);
     text("Alter und Bildungsbereichen 2010", 450, 85);
   }
 
@@ -563,8 +569,8 @@ public class ViewController
     drawHeadline();
 
     fill(255);
-    textSize(26);
-    text("Zoom", 1200, 50);
+    textSize(24);
+    text("Zoom", 10, 240);
     text("Legende", 10, 280);
   }
 }
