@@ -145,13 +145,15 @@ public class ViewController
       if (viewModus == 2)
       {
         // update big circle when clicked
-        drawBigCircle(500.0, 3);
+        int l = getLevel();
+        drawBigCircle(500.0, l);
       }
       else if (viewModus == 3)
       {
         // update two big circles when clicked
-        drawGenderCircle(400.0, 1, 3);
-        drawGenderCircle(400.0, 2, 3);
+        int l = getLevel();
+        drawGenderCircle(400.0, 1, l);
+        drawGenderCircle(400.0, 2, l);
       }
     }
   }
@@ -160,6 +162,9 @@ public class ViewController
   {
     float posX, posY;
     Diagram d;
+    String t2 = "";
+    String t1;
+    
     if (gender == 1)
     {
       posX = width/4 + 220;
@@ -172,6 +177,27 @@ public class ViewController
       posY = height/2;
       d = new Diagram(selectedDataRecords, maxRadius, 3, posX, posY);
     }
+    
+    DataRecord dr = d.getData();
+    int size = 24;
+    noStroke();
+    textSize(size);
+    t1 = ((Integer)(Math.round(dr.getList(1)[0]))).toString()+" Individuen in dieser Bevölkerungsgruppe";
+    int w = (int)textWidth(t1);
+    fill(60);
+    rect(width/2, 131, w, size);
+    fill(250);
+    text( t1 , width/2, 150);
+    
+    t2 += "("+((Integer)(Math.round(dr.getList(2)[0]))).toString()+" männlich, ";
+    t2 += ((Integer)(Math.round(dr.getList(3)[0]))).toString()+" weiblich) ";
+    textSize(size*(3/4));
+    w = (int)textWidth(t2);
+    fill(260);
+    //rect(width/2, 150, w, 50);
+    fill(250);
+    text( t2 , width/2, 150);
+    
 
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
     ArrayList<DiagramPart> dp2 = d.getDiagram2();
@@ -402,7 +428,7 @@ public class ViewController
               desiredInfo = dp.indexOf(p);
               legend.setTags(1,colorIndex1,colorIndex2);
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
-              legend.drawLegend(3);
+              legend.drawLegend(level);
               noStroke();
             }
             else 
@@ -442,7 +468,7 @@ public class ViewController
               legend.setDiagramTag(1);
               legend.setSectorTag(colorIndex1);
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
-              legend.drawLegend(3);
+              legend.drawLegend(level);
               noStroke();
             }
             else
@@ -469,7 +495,7 @@ public class ViewController
           desiredInfo = dp.indexOf(p);
           legend.setDiagramTag(1);
           arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
-          legend.drawLegend(3);
+          legend.drawLegend(level);
           noStroke();
         }
         else
