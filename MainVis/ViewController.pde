@@ -36,13 +36,14 @@ public class ViewController
       {
         background(60);
         drawLittleCircles();
-        drawHeadlinesView1();
+        drawHeadlines();
         legend.drawLegend(1);
         buttonF.initiateLeft();
         buttonM1.initiateLeft();
         buttonM2.initiateLeft();
         buttonM3.initiateLeft();
         firstRun = false;
+        overview.drawOverview(dataRecords, diagrams, selection);
       }
       buttonF.updateLeft();
       buttonM1.updateLeft();
@@ -77,7 +78,7 @@ public class ViewController
       {
         background(60);
         overview.drawOverview(dataRecords, diagrams, selection);
-        drawHeadlinesView2();
+        drawHeadlines();
         legend.drawLegend(2);
         buttonG.initiateRight();
         buttonGg.initiateRight();
@@ -545,22 +546,13 @@ public class ViewController
     text("Alter und Bildungsbereichen 2010", 450, 85);
   }
 
-  void drawHeadlinesView1()
+  void drawHeadlines()
   {
     drawHeadline();
 
     fill(255);
-    textSize(28);
-    text("Zoomlevel", 10, 50);
-    text("Legende", 10, 180);
-  }
-
-  void drawHeadlinesView2()
-  {
-    drawHeadline();
-
-    fill(255);
-    textSize(28);
+    textSize(26);
+    text("Zoom", 1200, 50);
     text("Legende", 10, 280);
   }
 }
