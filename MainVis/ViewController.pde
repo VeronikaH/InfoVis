@@ -391,14 +391,19 @@ public class ViewController
             fill(sc.getSchoolColor(colorIndex1, colorIndex2));
             boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.getRadius();
             boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (2.0/6.0)*p.getRadius();
-            if (p.mouseInside(x, y) && nearCenter && !lowerLevel)
+            if (p.mouseInside(x, y) && nearCenter && !lowerLevel && mousePressed)
             {
-              if (mousePressed)
-                desiredInfo = dp.indexOf(p);
+              desiredInfo = dp.indexOf(p);
+              legend.setTags(1,colorIndex1,colorIndex2);
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+              legend.drawLegend(3);
+              noStroke();
             }
-            else
+            else 
+            {
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+              legend.resetTags();
+            }
           }
         }
       }
@@ -425,14 +430,18 @@ public class ViewController
             boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.getRadius();
             boolean lowerLevel = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/4.0)*p.getRadius();
 
-            if (p.mouseInside(x, y) && nearCenter && !lowerLevel)
+            if (p.mouseInside(x, y) && nearCenter && !lowerLevel && mousePressed)
             {
-              if (mousePressed)
-                desiredInfo = dp.indexOf(p);
+              desiredInfo = dp.indexOf(p);
+              legend.setDiagramTag(1);
+              legend.setSectorTag(colorIndex1);
               arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+              legend.drawLegend(3);
+              noStroke();
             }
             else
               arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+              legend.resetTags();
           }
         }
       }
@@ -449,14 +458,17 @@ public class ViewController
         fill(200);
         boolean nearCenter = sqrt(sq(mouseX-x) + sq(mouseY-y)) < (1.0/2.0)*p.radius;
 
-        if (p.mouseInside(x, y) && nearCenter)
+        if (p.mouseInside(x, y) && nearCenter && mousePressed)
         {
-          if (mousePressed)
-            desiredInfo = dp.indexOf(p);
+          desiredInfo = dp.indexOf(p);
+          legend.setDiagramTag(1);
           arc(x, y, p.getRadius()+10, p.getRadius()+10, p.getAngle1(), p.getAngle2(), PIE);
+          legend.drawLegend(3);
+          noStroke();
         }
         else
           arc(x, y, p.getRadius(), p.getRadius(), p.getAngle1(), p.getAngle2(), PIE);
+          legend.resetTags();
       }
       
       if (desiredInfo >= 0)
