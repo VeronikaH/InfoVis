@@ -186,20 +186,20 @@ public class ViewController
     int size = 24;
     noStroke();
     textSize(size);
-    t1 = ((Integer)(Math.round(dr.getList(1)[0]))).toString()+" Individuen in dieser Bevölkerungsgruppe";
+    t1 = ("Gesamt: " + (Integer)(Math.round(dr.getList(1)[0]))).toString()+" Personen in dieser Bevölkerungsgruppe";
     int w = (int)textWidth(t1);
     fill(60);
-    rect(width/2, 131, w, size);
+    rect(width/2-200, 150, w, size);
     fill(250);
-    text( t1 , width/2, 150);
+    text( t1 ,  width/2-200, 150);
     
     t2 += "("+((Integer)(Math.round(dr.getList(2)[0]))).toString()+" männlich, "+ ((Integer)(Math.round(dr.getList(3)[0]))).toString()+" weiblich) ";
     textSize(size*3/4);
     w = (int)textWidth(t2);
     fill(60);
-    rect(width/2, 152, w, 50);
+    rect(width/2-100, 170, w, 50);
     fill(250);
-    text( t2 , width/2, 162);
+    text( t2 , width/2-100, 170);
     
 
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
@@ -235,7 +235,7 @@ public class ViewController
     
     textSize(24);
     DataRecord dr = d.getData();
-    String t1 = ((Integer)(Math.round(dr.getList(1)[0]))).toString()+" Individuen in dieser Bevölkerungsgruppe";
+    String t1 = ("Gesamt: " + (Integer)(Math.round(dr.getList(1)[0]))).toString()+" Personen in dieser Bevölkerungsgruppe";
     String t2 = ((Integer)(Math.round(dr.getList(1)[1]))).toString()+" in System erfasst";
     int w = (int) Math.max(textWidth(t1), textWidth(t2));
     fill(60);
@@ -545,7 +545,7 @@ public class ViewController
       w = textWidth(t); 
       text(t, posX, posY);
       textSize(size*3/4);
-      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val))).toString()+" Individuen)", posX, posY + size);
+      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val))).toString()+" Personen)", posX, posY + size);
     }
     else
     {
@@ -581,7 +581,7 @@ public class ViewController
       w = textWidth(t); 
       text(t, posX, posY);
       textSize(size*3/4);
-      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val/100.0))).toString()+" Individuen)", posX, posY + size);
+      text("("+ ((Integer)(Math.round(info.getList(1)[0] * val/100.0))).toString()+" Personen)", posX, posY + size);
     }
   }
 
