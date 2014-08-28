@@ -193,14 +193,13 @@ public class ViewController
     fill(250);
     text( t1 , width/2, 150);
     
-    t2 += "("+((Integer)(Math.round(dr.getList(2)[0]))).toString()+" männlich, ";
-    t2 += ((Integer)(Math.round(dr.getList(3)[0]))).toString()+" weiblich) ";
-    textSize(size*(3/4));
+    t2 += "("+((Integer)(Math.round(dr.getList(2)[0]))).toString()+" männlich, "+ ((Integer)(Math.round(dr.getList(3)[0]))).toString()+" weiblich) ";
+    textSize(size*3/4);
     w = (int)textWidth(t2);
-    fill(260);
-    //rect(width/2, 150, w, 50);
+    fill(60);
+    rect(width/2, 152, w, 50);
     fill(250);
-    text( t2 , width/2, 150);
+    text( t2 , width/2, 162);
     
 
     ArrayList<DiagramPart> dp1 = d.getDiagram1();
